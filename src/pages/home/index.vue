@@ -72,6 +72,7 @@
 import { ref, onMounted } from 'vue';
 import { onShow, onPullDownRefresh } from '@dcloudio/uni-app';
 import { request } from '../../utils/api';
+import { isLoggedIn, getOpenid } from '../../utils/auth';
 import FishCard from '../../components/FishCard.vue';
 
 const dailyFish = ref(null);
@@ -113,9 +114,17 @@ async function loadSeasonal() {
   }
 }
 
-function loadCollectionCount() {
-  const stored = uni.getStorageSync('collection_count');
-  collectionCount.value = stored ? parseInt(stored) : 0;
+async function loadCollectionCount() {
+  if (!isLoggedIn()) {
+    collectionCount.value = 0;
+    return;
+  }
+  try {
+    const res = await request({ url: '/user/stats', data: { openid: getOpenid() } });
+    collectionCount.value = res.data.collection_count || 0;
+  } catch (e) {
+    collectionCount.value = 0;
+  }
 }
 
 function goFishDetail(fish) {

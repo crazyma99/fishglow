@@ -12,10 +12,10 @@
       "es6": true,
       "postcss": true,
       "minified": true,
-      "ignoreDevUnusedFiles": false,
-      "ignoreUploadUnusedFiles": false
+      "ignoreDevUnusedFiles": true,
+      "ignoreUploadUnusedFiles": true
     },
     "usingComponents": true,
-    "requiredPrivateInfos": ["chooseImage"]
+    "lazyCodeLoading": "requiredComponents"
   }
 }

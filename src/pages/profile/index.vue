@@ -134,6 +134,12 @@ function handleLogout() {
     success(res) {
       if (res.confirm) {
         authLogout();
+        // 清除所有缓存数据
+        uni.removeStorageSync('collection_count');
+        uni.removeStorageSync('identify_count');
+        uni.removeStorageSync('user_nickname');
+        uni.removeStorageSync('user_avatar');
+        uni.removeStorageSync('user_badges');
         loggedIn.value = false;
         nickname.value = '';
         avatar.value = '';

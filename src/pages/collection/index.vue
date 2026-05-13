@@ -1,5 +1,8 @@
 <template>
   <view class="collection">
+    <LoginGuide v-if="!loggedIn" title="登录查看图鉴" desc="登录后可收藏鱼种、查看收集进度" @loggedIn="onLoggedIn" />
+
+    <template v-else>
     <view class="stats-header">
       <text class="stats-header__text">已收集 <text class="stats-header__num">{{ collectedList.length }}</text>/30</text>
     </view>
@@ -19,6 +22,7 @@
         <text class="grid__name">{{ item.collected ? item.fish_name : '???' }}</text>
       </view>
     </view>
+    </template>
   </view>
 </template>
 
@@ -27,14 +31,23 @@ import { ref } from 'vue';
 import { onShow, onPullDownRefresh } from '@dcloudio/uni-app';
 import { request } from '../../utils/api';
 import { getOpenid, isLoggedIn } from '../../utils/auth';
+import LoginGuide from '../../components/LoginGuide.vue';
+
+const loggedIn = ref(false);
 
 const collectedList = ref([]);
 const displayList = ref([]);
 const seasonalData = ref([]);
 
 onShow(() => {
+  loggedIn.value = isLoggedIn();
   loadCollection();
 });
+
+function onLoggedIn() {
+  loggedIn.value = true;
+  loadCollection();
+}
 
 onPullDownRefresh(async () => {
   try {

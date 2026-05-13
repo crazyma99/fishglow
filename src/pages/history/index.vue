@@ -1,21 +1,25 @@
 <template>
   <view class="history">
-    <view v-for="item in list" :key="item.id || item.timestamp" class="history__item" hover-class="history__item--active" @tap="goResult(item)">
-      <image v-if="item.photo_path || item.image_url" :src="getImgUrl(item.photo_path || item.image_url)" class="history__img" mode="aspectFill" />
-      <view v-else class="history__img-placeholder"></view>
-      <view class="history__info">
-        <text class="history__name">{{ item.fish_name || '未知鱼种' }}</text>
-        <text class="history__date">{{ formatDate(item.created_at || item.timestamp) }}</text>
+    <LoginGuide v-if="!loggedIn" title="登录查看历史" desc="登录后可查看识别记录" @loggedIn="onLoggedIn" />
+
+    <template v-else>
+      <view v-for="item in list" :key="item.id || item.timestamp" class="history__item" hover-class="history__item--active" @tap="goResult(item)">
+        <image v-if="item.photo_path || item.image_url" :src="getImgUrl(item.photo_path || item.image_url)" class="history__img" mode="aspectFill" />
+        <view v-else class="history__img-placeholder"></view>
+        <view class="history__info">
+          <text class="history__name">{{ item.fish_name || '未知鱼种' }}</text>
+          <text class="history__date">{{ formatDate(item.created_at || item.timestamp) }}</text>
+        </view>
       </view>
-    </view>
 
-    <view v-if="list.length === 0 && !loading" class="empty">
-      <text class="empty__text">暂无识别记录</text>
-    </view>
+      <view v-if="list.length === 0 && !loading" class="empty">
+        <text class="empty__text">暂无识别记录</text>
+      </view>
 
-    <view v-if="hasMore" class="load-more" @tap="loadMore">
-      <text class="load-more__text">加载更多</text>
-    </view>
+      <view v-if="hasMore" class="load-more" @tap="loadMore">
+        <text class="load-more__text">加载更多</text>
+      </view>
+    </template>
   </view>
 </template>
 
@@ -24,6 +28,14 @@ import { ref, onMounted } from 'vue';
 import { request } from '../../utils/api';
 import { getOpenid, isLoggedIn } from '../../utils/auth';
 import { setTemp } from '../../utils/storage';
+import LoginGuide from '../../components/LoginGuide.vue';
+
+const loggedIn = ref(isLoggedIn());
+
+function onLoggedIn() {
+  loggedIn.value = true;
+  loadList();
+}
 
 import { IMG_BASE } from '../../utils/config';
 function getImgUrl(url) {

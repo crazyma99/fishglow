@@ -1,6 +1,8 @@
 <template>
   <view class="contributions">
-    <view v-for="item in list" :key="item.id" class="contrib-item" hover-class="contrib-item--active" @tap="goDetail(item)">
+    <LoginGuide v-if="!loggedIn" title="登录查看贡献" desc="登录后可查看你提交的鱼种数据" @loggedIn="onLoggedIn" />
+
+    <view v-for="item in list" v-if="loggedIn" :key="item.id" class="contrib-item" hover-class="contrib-item--active" @tap="goDetail(item)">
       <view class="contrib-item__header">
         <text class="contrib-item__name">{{ item.fish_name }}</text>
         <text class="contrib-item__status" :class="'status--' + item.status">{{ statusLabel(item.status) }}</text>
@@ -23,6 +25,14 @@
 import { ref, onMounted } from 'vue';
 import { request } from '../../utils/api';
 import { getOpenid, isLoggedIn } from '../../utils/auth';
+import LoginGuide from '../../components/LoginGuide.vue';
+
+const loggedIn = ref(isLoggedIn());
+
+function onLoggedIn() {
+  loggedIn.value = true;
+  loadList();
+}
 
 const list = ref([]);
 const loading = ref(true);

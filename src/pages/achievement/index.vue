@@ -1,6 +1,8 @@
 <template>
   <view class="achievement">
-    <view class="grid">
+    <LoginGuide v-if="!loggedIn" title="登录查看成就" desc="登录后可解锁勋章和查看成就" @loggedIn="onLoggedIn" />
+
+    <view v-else class="grid">
       <view
         v-for="badge in allBadges"
         :key="badge.badge_id"
@@ -61,6 +63,14 @@
 import { ref, onMounted } from 'vue';
 import { request } from '../../utils/api';
 import { getOpenid, isLoggedIn } from '../../utils/auth';
+import LoginGuide from '../../components/LoginGuide.vue';
+
+const loggedIn = ref(isLoggedIn());
+
+function onLoggedIn() {
+  loggedIn.value = true;
+  loadBadges();
+}
 
 const BADGE_LIST = [
   { badge_id: 'first', name: '初识', threshold: 1 },

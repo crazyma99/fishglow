@@ -86,7 +86,8 @@ async function handleImage(filePath) {
 
     uni.navigateTo({ url: '/pages/result/index' });
   } catch (e) {
-    uni.showToast({ title: e.message || '识别失败', icon: 'none' });
+    console.error('[identify] error:', JSON.stringify(e));
+    uni.showToast({ title: e.message || e.errMsg || '识别失败', icon: 'none' });
   } finally {
     loading.value = false;
   }
