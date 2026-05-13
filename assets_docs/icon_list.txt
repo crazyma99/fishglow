@@ -1,0 +1,15 @@
+album.svg
+arrow-left.svg
+arrow-right.svg
+bookmark.svg
+camera.svg
+close.svg
+fish.svg
+history.svg
+info.svg
+lock.svg
+logout.svg
+search.svg
+share.svg
+star.svg
+trophy.svg

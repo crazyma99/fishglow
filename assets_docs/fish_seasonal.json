@@ -1,0 +1,692 @@
+[
+  {
+    "id": "crucian_carp",
+    "name_zh": "鲫鱼",
+    "name_latin": "Carassius auratus",
+    "monthly_activity": [5, 6, 8, 10, 9, 6, 4, 4, 7, 9, 8, 5],
+    "fishing_methods": ["台钓", "传统钓", "筏钓"],
+    "recommended_bait": {
+      "spring": ["蚯蚓", "红虫", "商品饵(腥香型)"],
+      "summer": ["玉米粒", "面饵", "商品饵(清淡型)"],
+      "autumn": ["蚯蚓", "红虫", "商品饵(腥香型)"],
+      "winter": ["红虫", "蚯蚓", "虾拉饵"]
+    },
+    "best_time": {
+      "spring": "全天，早晚优先",
+      "summer": "早晨/傍晚/夜钓",
+      "autumn": "全天",
+      "winter": "中午前后(10:00-15:00)"
+    },
+    "water_temp": { "optimal_min": 15, "optimal_max": 25 },
+    "habitat": "静水/缓流，水草区、淤泥底",
+    "difficulty": "easy",
+    "tip": "四季可钓的入门首选，春秋找浅滩水草区，冬季找深水向阳处"
+  },
+  {
+    "id": "common_carp",
+    "name_zh": "鲤鱼",
+    "name_latin": "Cyprinus carpio",
+    "monthly_activity": [3, 4, 7, 9, 10, 8, 6, 6, 8, 9, 6, 3],
+    "fishing_methods": ["台钓", "传统钓", "抛竿", "爆炸钩"],
+    "recommended_bait": {
+      "spring": ["蚯蚓", "螺蛳肉", "商品饵(腥型)"],
+      "summer": ["玉米", "红薯", "螺鲤", "发酵饵"],
+      "autumn": ["玉米", "红薯", "商品饵(薯香型)", "螺蛳"],
+      "winter": ["红虫", "蚯蚓", "商品饵(浓腥型)"]
+    },
+    "best_time": {
+      "spring": "上午9:00-11:00，下午14:00-17:00",
+      "summer": "早晨/傍晚/夜钓(首选)",
+      "autumn": "全天，早晚为佳",
+      "winter": "中午前后(11:00-15:00)"
+    },
+    "water_temp": { "optimal_min": 18, "optimal_max": 28 },
+    "habitat": "水底层，偏爱泥底、障碍物旁、坡坎处",
+    "difficulty": "medium",
+    "tip": "鲤鱼警惕性高，打窝要提前，线组要结实，秋季是黄金钓鲤季"
+  },
+  {
+    "id": "grass_carp",
+    "name_zh": "草鱼",
+    "name_latin": "Ctenopharyngodon idella",
+    "monthly_activity": [2, 3, 6, 8, 9, 10, 9, 8, 8, 7, 4, 2],
+    "fishing_methods": ["台钓", "传统钓", "抛竿", "浮钓"],
+    "recommended_bait": {
+      "spring": ["嫩草芽", "蚯蚓", "玉米"],
+      "summer": ["嫩玉米", "草尖", "南瓜藤", "桑葚"],
+      "autumn": ["玉米", "草叶", "商品饵(草莓/果香型)"],
+      "winter": ["玉米", "蚯蚓"  ]
+    },
+    "best_time": {
+      "spring": "中午前后(水温较高时)",
+      "summer": "早晨/傍晚/夜钓",
+      "autumn": "全天，上午为佳",
+      "winter": "中午(少数温暖天气)"
+    },
+    "water_temp": { "optimal_min": 20, "optimal_max": 32 },
+    "habitat": "中上层水域，水草丰富的水域，进水口",
+    "difficulty": "medium",
+    "tip": "草鱼喜暖怕冷，夏秋用嫩玉米或鲜草浮钓效果极佳"
+  },
+  {
+    "id": "silver_carp",
+    "name_zh": "鲢鱼",
+    "name_latin": "Hypophthalmichthys molitrix",
+    "monthly_activity": [1, 2, 4, 6, 8, 10, 10, 9, 7, 5, 3, 1],
+    "fishing_methods": ["台钓(飞铅)", "抛竿水怪", "手竿浮钓"],
+    "recommended_bait": {
+      "spring": ["酸臭饵", "豆腐渣发酵饵"],
+      "summer": ["酸臭饵", "蒜味饵", "雾化型商品饵"],
+      "autumn": ["酸臭饵", "蒜味商品饵"],
+      "winter": ["基本停口"]
+    },
+    "best_time": {
+      "spring": "中午前后",
+      "summer": "上午/下午(避开正午暴晒)",
+      "autumn": "上午9:00-下午16:00",
+      "winter": "不宜垂钓"
+    },
+    "water_temp": { "optimal_min": 22, "optimal_max": 32 },
+    "habitat": "中上层，开阔水面，喜欢风浪处",
+    "difficulty": "medium",
+    "tip": "鲢鱼滤食性，饵料雾化要好，酸臭味是关键，钓浮为主"
+  },
+  {
+    "id": "bighead_carp",
+    "name_zh": "鳙鱼",
+    "name_latin": "Hypophthalmichthys nobilis",
+    "monthly_activity": [1, 2, 4, 7, 9, 10, 10, 9, 8, 5, 3, 1],
+    "fishing_methods": ["台钓(飞铅)", "抛竿水怪", "手竿浮钓"],
+    "recommended_bait": {
+      "spring": ["发酵豆渣", "臭酸饵"],
+      "summer": ["酸臭饵", "草莓味商品饵", "发酵玉米面"],
+      "autumn": ["酸臭饵", "蒜香发酵饵"],
+      "winter": ["基本停口"]
+    },
+    "best_time": {
+      "spring": "中午前后",
+      "summer": "早晨/下午",
+      "autumn": "上午9:00-下午16:00",
+      "winter": "不宜垂钓"
+    },
+    "water_temp": { "optimal_min": 22, "optimal_max": 32 },
+    "habitat": "中上层，大水面深水区，喜氧量充足处",
+    "difficulty": "medium",
+    "tip": "鳙鱼比鲢鱼体型更大，饵料偏臭香，抛竿水怪远投效果好"
+  },
+  {
+    "id": "snakehead",
+    "name_zh": "黑鱼",
+    "name_latin": "Channa argus",
+    "monthly_activity": [1, 2, 5, 7, 9, 10, 10, 9, 8, 6, 3, 1],
+    "fishing_methods": ["路亚", "传统钓(活饵)", "雷蛙"],
+    "recommended_bait": {
+      "spring": ["泥鳅", "小鱼", "软虫(路亚)"],
+      "summer": ["雷蛙", "波爬", "泥鳅", "蛙"],
+      "autumn": ["泥鳅", "米诺", "VIB", "软虫"],
+      "winter": ["基本停口(少数温暖天)"]
+    },
+    "best_time": {
+      "spring": "中午前后(水温回升时)",
+      "summer": "早晨/傍晚(护仔期全天)",
+      "autumn": "全天，上午为佳",
+      "winter": "不宜垂钓"
+    },
+    "water_temp": { "optimal_min": 20, "optimal_max": 30 },
+    "habitat": "水草密集区、浅滩、芦苇荡",
+    "difficulty": "medium",
+    "tip": "夏季黑鱼护仔期最好钓，找水草区用雷蛙打黑刺激性极强"
+  },
+  {
+    "id": "topmouth_culter",
+    "name_zh": "翘嘴",
+    "name_latin": "Culter alburnus",
+    "monthly_activity": [3, 4, 6, 8, 9, 10, 9, 8, 9, 8, 5, 3],
+    "fishing_methods": ["路亚", "抛竿", "筏钓", "台钓"],
+    "recommended_bait": {
+      "spring": ["米诺", "亮片", "小虾"],
+      "summer": ["波爬", "铅笔", "米诺", "VIB"],
+      "autumn": ["米诺", "VIB", "亮片", "小鱼"],
+      "winter": ["VIB", "金属饵(慢摇)"]
+    },
+    "best_time": {
+      "spring": "早晨/傍晚",
+      "summer": "清晨/傍晚/夜间",
+      "autumn": "全天，早晚为佳",
+      "winter": "中午前后"
+    },
+    "water_temp": { "optimal_min": 15, "optimal_max": 30 },
+    "habitat": "中上层，开阔水面，大坝下方、风浪处",
+    "difficulty": "medium",
+    "tip": "翘嘴追小鱼群，水面有炸水时用波爬或米诺快收效果炸裂"
+  },
+  {
+    "id": "mandarin_fish",
+    "name_zh": "鳜鱼",
+    "name_latin": "Siniperca chuatsi",
+    "monthly_activity": [2, 3, 5, 8, 9, 10, 8, 7, 9, 8, 4, 2],
+    "fishing_methods": ["路亚", "活饵底钓"],
+    "recommended_bait": {
+      "spring": ["软虫", "小型米诺", "活虾"],
+      "summer": ["德州钓组(软虫)", "倒吊", "活泥鳅"],
+      "autumn": ["软虫", "VIB", "小胖子(crankbait)", "活饵"],
+      "winter": ["VIB(慢收)", "金属饵"]
+    },
+    "best_time": {
+      "spring": "上午/傍晚",
+      "summer": "早晨/傍晚/夜钓",
+      "autumn": "全天",
+      "winter": "中午前后"
+    },
+    "water_temp": { "optimal_min": 18, "optimal_max": 28 },
+    "habitat": "乱石堆、桥墩、水下障碍物旁，伏击型",
+    "difficulty": "hard",
+    "tip": "鳜鱼是伏击型猎手，路亚找结构区慢拖软虫贴底搜索是关键"
+  },
+  {
+    "id": "chinese_minnow",
+    "name_zh": "马口鱼",
+    "name_latin": "Opsariichthys bidens",
+    "monthly_activity": [3, 4, 7, 9, 10, 9, 8, 7, 9, 8, 5, 3],
+    "fishing_methods": ["路亚(微物)", "飞蝇钓", "传统钓"],
+    "recommended_bait": {
+      "spring": ["微型亮片", "小飞蝇", "蚯蚓"],
+      "summer": ["微型米诺", "亮片(1-3g)", "小飞蝇"],
+      "autumn": ["亮片", "微型米诺", "蚯蚓"],
+      "winter": ["亮片(慢收)", "蚯蚓"]
+    },
+    "best_time": {
+      "spring": "上午/下午",
+      "summer": "早晨/傍晚",
+      "autumn": "全天",
+      "winter": "中午前后"
+    },
+    "water_temp": { "optimal_min": 14, "optimal_max": 26 },
+    "habitat": "溪流、浅滩、急流缓交汇处，清水",
+    "difficulty": "easy",
+    "tip": "溪流路亚入门首选，用1-3g亮片顺流抛投慢收即可，手感极佳"
+  },
+  {
+    "id": "topmouth_gudgeon",
+    "name_zh": "白条",
+    "name_latin": "Hemiculter leucisculus",
+    "monthly_activity": [4, 5, 7, 9, 10, 9, 8, 8, 9, 8, 6, 4],
+    "fishing_methods": ["台钓", "传统钓", "路亚(微物)", "飞蝇钓"],
+    "recommended_bait": {
+      "spring": ["蚯蚓", "拉饵(腥味)", "小飞蝇"],
+      "summer": ["拉饵(腥味)", "苍蝇", "亮片"],
+      "autumn": ["蚯蚓", "拉饵", "亮片"],
+      "winter": ["红虫", "蚯蚓"]
+    },
+    "best_time": {
+      "spring": "全天",
+      "summer": "全天(中午稍弱)",
+      "autumn": "全天",
+      "winter": "中午前后"
+    },
+    "water_temp": { "optimal_min": 12, "optimal_max": 30 },
+    "habitat": "表层水域，各种水体均有分布",
+    "difficulty": "easy",
+    "tip": "白条闹窝时改钓浮或飞铅，微物路亚也很有趣"
+  },
+  {
+    "id": "catfish",
+    "name_zh": "鲶鱼",
+    "name_latin": "Silurus asotus",
+    "monthly_activity": [1, 2, 5, 7, 9, 10, 10, 9, 8, 6, 3, 1],
+    "fishing_methods": ["传统钓", "抛竿", "路亚", "插竿钓"],
+    "recommended_bait": {
+      "spring": ["蚯蚓", "鸡肝", "小鱼"],
+      "summer": ["鸡肝", "蚯蚓", "泥鳅", "臭饵", "软虫(路亚)"],
+      "autumn": ["鸡肝", "蚯蚓", "小鱼", "VIB(路亚)"],
+      "winter": ["基本停口"]
+    },
+    "best_time": {
+      "spring": "傍晚/夜钓",
+      "summer": "夜钓为主(天黑后至凌晨)",
+      "autumn": "傍晚/夜钓",
+      "winter": "不宜垂钓"
+    },
+    "water_temp": { "optimal_min": 20, "optimal_max": 30 },
+    "habitat": "水底层，洞穴、石缝、暗处，浑水",
+    "difficulty": "easy",
+    "tip": "鲶鱼夜行性，夏夜用鸡肝或蚯蚓钓近岸暗处效果最佳"
+  },
+  {
+    "id": "yellow_catfish",
+    "name_zh": "黄颡鱼",
+    "name_latin": "Pelteobagrus fulvidraco",
+    "monthly_activity": [2, 3, 6, 8, 9, 10, 9, 8, 8, 7, 4, 2],
+    "fishing_methods": ["传统钓", "台钓", "插竿钓"],
+    "recommended_bait": {
+      "spring": ["蚯蚓", "红虫", "鸡肝"],
+      "summer": ["蚯蚓", "鸡肝", "虾肉"],
+      "autumn": ["蚯蚓", "鸡肝", "螺蛳肉"],
+      "winter": ["蚯蚓", "红虫"]
+    },
+    "best_time": {
+      "spring": "傍晚/夜钓",
+      "summer": "夜钓为主(天黑后)",
+      "autumn": "傍晚/夜钓",
+      "winter": "中午(偶尔有口)"
+    },
+    "water_temp": { "optimal_min": 18, "optimal_max": 28 },
+    "habitat": "水底层，乱石缝、桥墩、水草根部",
+    "difficulty": "easy",
+    "tip": "黄颡鱼吃口凶猛，蚯蚓挂整条效果最好，注意防刺伤"
+  },
+  {
+    "id": "wuchang_bream",
+    "name_zh": "鳊鱼",
+    "name_latin": "Parabramis pekinensis",
+    "monthly_activity": [2, 3, 6, 8, 9, 10, 9, 8, 8, 7, 4, 2],
+    "fishing_methods": ["台钓", "传统钓", "浮钓"],
+    "recommended_bait": {
+      "spring": ["蚯蚓", "商品饵(腥香型)", "麦粒"],
+      "summer": ["玉米", "嫩草", "商品饵(清淡型)", "南瓜叶"],
+      "autumn": ["玉米", "商品饵(香甜型)", "蚯蚓"],
+      "winter": ["红虫", "蚯蚓"]
+    },
+    "best_time": {
+      "spring": "上午/下午",
+      "summer": "早晨/傍晚",
+      "autumn": "全天",
+      "winter": "中午前后"
+    },
+    "water_temp": { "optimal_min": 18, "optimal_max": 28 },
+    "habitat": "中下层，水草区、缓流",
+    "difficulty": "easy",
+    "tip": "鳊鱼喜食素饵，夏天用嫩玉米钓半水，抬漂为主要漂相"
+  },
+  {
+    "id": "black_carp",
+    "name_zh": "青鱼",
+    "name_latin": "Mylopharyngodon piceus",
+    "monthly_activity": [1, 2, 4, 6, 8, 9, 10, 9, 8, 6, 3, 1],
+    "fishing_methods": ["抛竿", "台钓(重型)", "传统钓"],
+    "recommended_bait": {
+      "spring": ["螺蛳", "蚌肉", "蚯蚓"],
+      "summer": ["螺蛳", "蚌肉", "玉米", "商品饵(螺味)"],
+      "autumn": ["螺蛳", "蚌肉", "玉米"],
+      "winter": ["螺蛳(少数温暖天)"]
+    },
+    "best_time": {
+      "spring": "中午前后",
+      "summer": "早晨/傍晚",
+      "autumn": "全天",
+      "winter": "不宜垂钓"
+    },
+    "water_temp": { "optimal_min": 20, "optimal_max": 30 },
+    "habitat": "水底层，深水区，螺蛳密集的硬底",
+    "difficulty": "hard",
+    "tip": "青鱼力气极大，线组必须粗壮，螺蛳是第一饵料，要打重窝守钓"
+  },
+  {
+    "id": "tilapia",
+    "name_zh": "罗非鱼",
+    "name_latin": "Oreochromis niloticus",
+    "monthly_activity": [1, 2, 4, 7, 9, 10, 10, 10, 9, 7, 4, 1],
+    "fishing_methods": ["台钓", "传统钓", "路亚"],
+    "recommended_bait": {
+      "spring": ["蚯蚓", "虾肉", "冻饵"],
+      "summer": ["冻饵(鸡肝型)", "虾肉", "商品饵(腥味)", "蚯蚓"],
+      "autumn": ["冻饵", "虾肉", "蚯蚓"],
+      "winter": ["基本停口(华南地区仍可)"]
+    },
+    "best_time": {
+      "spring": "中午前后",
+      "summer": "全天",
+      "autumn": "全天",
+      "winter": "中午(限华南)"
+    },
+    "water_temp": { "optimal_min": 24, "optimal_max": 35 },
+    "habitat": "适应性强，池塘、河流、水库均有，偏爱温暖水域",
+    "difficulty": "easy",
+    "tip": "罗非鱼主要分布在华南，喜高温，冻饵(肝味)是利器，吃口猛"
+  },
+  {
+    "id": "mud_carp",
+    "name_zh": "鲮鱼",
+    "name_latin": "Cirrhinus molitorella",
+    "monthly_activity": [2, 3, 5, 7, 9, 10, 10, 9, 8, 6, 4, 2],
+    "fishing_methods": ["台钓", "传统钓"],
+    "recommended_bait": {
+      "spring": ["花生麸饵", "商品饵(鲮鱼专用)"],
+      "summer": ["花生麸饵", "南北鲮鱼饵", "米饭"],
+      "autumn": ["花生麸饵", "商品饵(鲮鱼饵)"],
+      "winter": ["基本停口(两广地区尚可)"]
+    },
+    "best_time": {
+      "spring": "上午/下午",
+      "summer": "早晨/傍晚",
+      "autumn": "全天",
+      "winter": "中午(限华南)"
+    },
+    "water_temp": { "optimal_min": 22, "optimal_max": 32 },
+    "habitat": "底层，硬底、沙底，喜刮食藻类",
+    "difficulty": "medium",
+    "tip": "鲮鱼主要在华南，嘴小吃口轻，用小钩细线，花生麸是经典饵料"
+  },
+  {
+    "id": "yellowcheek",
+    "name_zh": "鳡鱼",
+    "name_latin": "Elopichthys bambusa",
+    "monthly_activity": [1, 2, 4, 6, 8, 10, 10, 9, 8, 6, 3, 1],
+    "fishing_methods": ["路亚", "抛竿(活饵)"],
+    "recommended_bait": {
+      "spring": ["米诺", "VIB", "活鱼"],
+      "summer": ["大型米诺", "波爬", "铅笔", "活鱼"],
+      "autumn": ["米诺", "VIB", "亮片"],
+      "winter": ["VIB(深水慢收)"]
+    },
+    "best_time": {
+      "spring": "上午/下午",
+      "summer": "早晨/傍晚",
+      "autumn": "全天",
+      "winter": "中午(极少有口)"
+    },
+    "water_temp": { "optimal_min": 20, "optimal_max": 30 },
+    "habitat": "中上层，大型江河、水库开阔水面",
+    "difficulty": "hard",
+    "tip": "鳡鱼是淡水中的猎豹，速度极快，路亚用大号米诺快收，中鱼后非常刺激"
+  },
+  {
+    "id": "redeye",
+    "name_zh": "赤眼鳟",
+    "name_latin": "Squaliobarbus curriculus",
+    "monthly_activity": [2, 3, 6, 8, 9, 10, 9, 8, 8, 7, 4, 2],
+    "fishing_methods": ["台钓", "传统钓", "路亚"],
+    "recommended_bait": {
+      "spring": ["蚯蚓", "面饵", "商品饵(腥香型)"],
+      "summer": ["玉米", "蚯蚓", "面饵", "小亮片(路亚)"],
+      "autumn": ["蚯蚓", "玉米", "商品饵(果香型)"],
+      "winter": ["红虫", "蚯蚓"]
+    },
+    "best_time": {
+      "spring": "上午/下午",
+      "summer": "早晨/傍晚",
+      "autumn": "全天",
+      "winter": "中午前后"
+    },
+    "water_temp": { "optimal_min": 18, "optimal_max": 28 },
+    "habitat": "中下层，江河缓流区，水质较好的水域",
+    "difficulty": "medium",
+    "tip": "赤眼鳟肉质鲜美，钓法类似草鱼但体型较小，台钓和路亚均可"
+  },
+  {
+    "id": "stone_moroko",
+    "name_zh": "麦穗鱼",
+    "name_latin": "Pseudorasbora parva",
+    "monthly_activity": [4, 5, 7, 9, 10, 9, 8, 8, 9, 8, 6, 4],
+    "fishing_methods": ["传统钓", "台钓(小钩细线)"],
+    "recommended_bait": {
+      "spring": ["红虫", "蚯蚓(细)", "面饵"],
+      "summer": ["面饵", "蚯蚓", "米饭粒"],
+      "autumn": ["蚯蚓", "红虫", "面饵"],
+      "winter": ["红虫"]
+    },
+    "best_time": {
+      "spring": "全天",
+      "summer": "全天",
+      "autumn": "全天",
+      "winter": "中午前后"
+    },
+    "water_temp": { "optimal_min": 10, "optimal_max": 30 },
+    "habitat": "浅水区，各种水体均有，适应性极强",
+    "difficulty": "easy",
+    "tip": "麦穗鱼是最常见的小杂鱼，钓大鱼时的闹窝元凶，用极细小钩可专钓"
+  },
+  {
+    "id": "bitterling",
+    "name_zh": "鳑鲏",
+    "name_latin": "Rhodeus ocellatus",
+    "monthly_activity": [4, 5, 7, 9, 10, 9, 8, 8, 9, 8, 6, 4],
+    "fishing_methods": ["传统钓(微物)", "台钓(袖钩小号)"],
+    "recommended_bait": {
+      "spring": ["红虫", "面饵(极小)", "蚯蚓(碎)"],
+      "summer": ["面饵", "红虫", "米饭粒"],
+      "autumn": ["红虫", "面饵"],
+      "winter": ["红虫"]
+    },
+    "best_time": {
+      "spring": "全天",
+      "summer": "全天",
+      "autumn": "全天",
+      "winter": "中午前后"
+    },
+    "water_temp": { "optimal_min": 10, "optimal_max": 28 },
+    "habitat": "浅水区，水草区，河蚌分布的水域",
+    "difficulty": "easy",
+    "tip": "鳑鲏色彩斑斓观赏性强，用1号袖钩极细线专钓，适合微物玩家"
+  },
+  {
+    "id": "loach",
+    "name_zh": "泥鳅",
+    "name_latin": "Misgurnus anguillicaudatus",
+    "monthly_activity": [2, 3, 6, 8, 9, 10, 9, 8, 8, 7, 4, 2],
+    "fishing_methods": ["传统钓", "地笼"],
+    "recommended_bait": {
+      "spring": ["蚯蚓", "红虫"],
+      "summer": ["蚯蚓", "面饵"],
+      "autumn": ["蚯蚓", "红虫"],
+      "winter": ["蚯蚓(少数暖天)"]
+    },
+    "best_time": {
+      "spring": "傍晚/夜间",
+      "summer": "夜间",
+      "autumn": "傍晚/夜间",
+      "winter": "不宜垂钓"
+    },
+    "water_temp": { "optimal_min": 18, "optimal_max": 28 },
+    "habitat": "底层淤泥中，稻田、沟渠、池塘",
+    "difficulty": "medium",
+    "tip": "泥鳅钓获难度不大但需耐心，更多用作路亚活饵使用"
+  },
+  {
+    "id": "softshell_turtle",
+    "name_zh": "甲鱼",
+    "name_latin": "Pelodiscus sinensis",
+    "monthly_activity": [1, 1, 4, 6, 8, 10, 10, 9, 8, 5, 2, 1],
+    "fishing_methods": ["传统钓", "插竿钓", "延绳钓"],
+    "recommended_bait": {
+      "spring": ["鸡肝", "猪肝", "蚯蚓"],
+      "summer": ["鸡肝", "鸭肝", "猪肝", "小鱼"],
+      "autumn": ["鸡肝", "猪肝", "蚯蚓"],
+      "winter": ["冬眠不宜钓"]
+    },
+    "best_time": {
+      "spring": "傍晚/夜钓",
+      "summer": "夜钓(天黑后)",
+      "autumn": "傍晚/夜钓",
+      "winter": "不宜垂钓"
+    },
+    "water_temp": { "optimal_min": 22, "optimal_max": 32 },
+    "habitat": "水底层，沙底、泥底浅滩，喜晒背",
+    "difficulty": "hard",
+    "tip": "甲鱼警惕性高，用粗线大钩挂鸡肝夜钓，中钩后用力拉不能松线"
+  },
+  {
+    "id": "largemouth_bass",
+    "name_zh": "鲈鱼",
+    "name_latin": "Micropterus salmoides",
+    "monthly_activity": [3, 4, 7, 9, 10, 9, 7, 7, 9, 9, 6, 3],
+    "fishing_methods": ["路亚", "台钓(活饵)"],
+    "recommended_bait": {
+      "spring": ["软虫(德州)", "小型crankbait", "活虾"],
+      "summer": ["软虫", "波爬", "蛙", "spinnerbait"],
+      "autumn": ["软虫", "米诺", "VIB", "复合亮片"],
+      "winter": ["倒吊(软虫)", "金属VIB(慢摇)"]
+    },
+    "best_time": {
+      "spring": "全天(产卵前后疯狂觅食)",
+      "summer": "早晨/傍晚",
+      "autumn": "全天",
+      "winter": "中午前后"
+    },
+    "water_temp": { "optimal_min": 16, "optimal_max": 27 },
+    "habitat": "障碍物旁，水草区、桥墩、倒树、石堆",
+    "difficulty": "medium",
+    "tip": "路亚鲈鱼找结构是核心，春季产卵期在浅滩，秋季深浅交界处最佳"
+  },
+  {
+    "id": "bronze_gudgeon",
+    "name_zh": "铜鱼(红尾)",
+    "name_latin": "Coreius heterodon",
+    "monthly_activity": [2, 3, 5, 7, 8, 9, 10, 9, 8, 7, 4, 2],
+    "fishing_methods": ["传统钓", "抛竿", "筏钓"],
+    "recommended_bait": {
+      "spring": ["蚯蚓", "虾肉", "螺蛳肉"],
+      "summer": ["蚯蚓", "虾肉", "玉米", "商品饵"],
+      "autumn": ["蚯蚓", "虾肉", "螺蛳肉"],
+      "winter": ["蚯蚓", "红虫"]
+    },
+    "best_time": {
+      "spring": "上午/下午",
+      "summer": "早晨/傍晚",
+      "autumn": "全天",
+      "winter": "中午前后"
+    },
+    "water_temp": { "optimal_min": 18, "optimal_max": 28 },
+    "habitat": "底层，江河急流区、卵石底",
+    "difficulty": "medium",
+    "tip": "铜鱼(红尾)生活在长江等大江急流中，用重铅沉底钓法，蚯蚓是万能饵"
+  },
+  {
+    "id": "military_fish",
+    "name_zh": "军鱼",
+    "name_latin": "Spinibarbus denticulatus",
+    "monthly_activity": [2, 3, 5, 7, 9, 10, 9, 8, 8, 7, 4, 2],
+    "fishing_methods": ["路亚", "传统钓", "台钓"],
+    "recommended_bait": {
+      "spring": ["蚯蚓", "溪虫", "米诺(路亚)"],
+      "summer": ["面包虫", "蚯蚓", "果实", "亮片(路亚)"],
+      "autumn": ["蚯蚓", "米诺", "亮片"],
+      "winter": ["蚯蚓(偶尔有口)"]
+    },
+    "best_time": {
+      "spring": "上午/下午",
+      "summer": "早晨/傍晚",
+      "autumn": "全天",
+      "winter": "中午前后"
+    },
+    "water_temp": { "optimal_min": 18, "optimal_max": 28 },
+    "habitat": "溪流、山区河流，清水急流段",
+    "difficulty": "hard",
+    "tip": "军鱼生活在山区清水溪流中，力气大善跳跃，路亚手感极佳"
+  },
+  {
+    "id": "creek_chub",
+    "name_zh": "溪哥(宽鳍鱲)",
+    "name_latin": "Zacco platypus",
+    "monthly_activity": [3, 4, 7, 9, 10, 10, 9, 8, 9, 8, 5, 3],
+    "fishing_methods": ["路亚(微物)", "飞蝇钓", "传统钓"],
+    "recommended_bait": {
+      "spring": ["微型亮片", "飞蝇", "蚯蚓"],
+      "summer": ["微型亮片", "飞蝇", "小面饵"],
+      "autumn": ["微型亮片", "飞蝇", "蚯蚓"],
+      "winter": ["亮片(慢收)"]
+    },
+    "best_time": {
+      "spring": "上午/下午",
+      "summer": "早晨/傍晚",
+      "autumn": "全天",
+      "winter": "中午前后"
+    },
+    "water_temp": { "optimal_min": 14, "optimal_max": 28 },
+    "habitat": "溪流浅滩、急流缓交汇处",
+    "difficulty": "easy",
+    "tip": "溪哥繁殖期雄鱼色彩极美，微物路亚的热门对象，1-2g亮片即可"
+  },
+  {
+    "id": "chinese_barbel",
+    "name_zh": "中华倒刺鲃",
+    "name_latin": "Spinibarbus sinensis",
+    "monthly_activity": [2, 3, 5, 7, 9, 10, 9, 8, 8, 6, 4, 2],
+    "fishing_methods": ["传统钓", "台钓", "路亚"],
+    "recommended_bait": {
+      "spring": ["蚯蚓", "溪虫", "面饵"],
+      "summer": ["嫩玉米", "蚯蚓", "果实", "小亮片(路亚)"],
+      "autumn": ["玉米", "蚯蚓", "米诺(路亚)"],
+      "winter": ["蚯蚓(偶尔有口)"]
+    },
+    "best_time": {
+      "spring": "上午/下午",
+      "summer": "早晨/傍晚",
+      "autumn": "全天",
+      "winter": "中午前后(极少)"
+    },
+    "water_temp": { "optimal_min": 18, "optimal_max": 28 },
+    "habitat": "山区溪流、河流深潭，清水卵石底",
+    "difficulty": "hard",
+    "tip": "中华倒刺鲃是溪流霸王鱼，力气大善冲刺，嫩玉米底钓深潭效果好"
+  },
+  {
+    "id": "acrossocheilus",
+    "name_zh": "光唇鱼",
+    "name_latin": "Acrossocheilus fasciatus",
+    "monthly_activity": [2, 3, 5, 7, 9, 10, 9, 8, 8, 6, 4, 2],
+    "fishing_methods": ["传统钓", "台钓", "路亚(微物)"],
+    "recommended_bait": {
+      "spring": ["溪虫(石蛾幼虫)", "蚯蚓", "红虫"],
+      "summer": ["溪虫", "蚯蚓", "苔藓", "微型亮片"],
+      "autumn": ["蚯蚓", "溪虫", "微型米诺"],
+      "winter": ["蚯蚓(极少有口)"]
+    },
+    "best_time": {
+      "spring": "上午/下午",
+      "summer": "早晨/傍晚",
+      "autumn": "全天",
+      "winter": "中午前后(极少)"
+    },
+    "water_temp": { "optimal_min": 16, "optimal_max": 26 },
+    "habitat": "清澈溪流、山区河流，石头底质",
+    "difficulty": "medium",
+    "tip": "光唇鱼喜清水石底环境，翻开石头找石蛾幼虫做饵是绝杀"
+  },
+  {
+    "id": "freshwater_grouper",
+    "name_zh": "淡水石斑鱼",
+    "name_latin": "Oxyeleotris marmorata",
+    "monthly_activity": [1, 2, 4, 6, 8, 10, 10, 9, 8, 6, 3, 1],
+    "fishing_methods": ["传统钓", "路亚"],
+    "recommended_bait": {
+      "spring": ["蚯蚓", "虾肉", "小鱼"],
+      "summer": ["活虾", "小鱼", "软虫(路亚)", "蚯蚓"],
+      "autumn": ["虾肉", "小鱼", "软虫"],
+      "winter": ["基本停口"]
+    },
+    "best_time": {
+      "spring": "傍晚",
+      "summer": "傍晚/夜钓",
+      "autumn": "傍晚/夜钓",
+      "winter": "不宜垂钓"
+    },
+    "water_temp": { "optimal_min": 22, "optimal_max": 32 },
+    "habitat": "底层，石缝、洞穴，热带/亚热带水域",
+    "difficulty": "medium",
+    "tip": "淡水石斑主要分布在华南，喜藏身石缝，用活饵沉底守钓为主"
+  },
+  {
+    "id": "silver_bighead",
+    "name_zh": "鲢鳙",
+    "name_latin": "Hypophthalmichthys spp.",
+    "monthly_activity": [1, 2, 4, 7, 9, 10, 10, 9, 8, 5, 3, 1],
+    "fishing_methods": ["台钓(飞铅)", "抛竿水怪", "手竿浮钓"],
+    "recommended_bait": {
+      "spring": ["酸臭饵", "发酵豆渣"],
+      "summer": ["酸臭饵", "蒜味商品饵", "雾化型饵料"],
+      "autumn": ["酸臭饵", "发酵玉米面"],
+      "winter": ["基本停口"]
+    },
+    "best_time": {
+      "spring": "中午前后(水温回升)",
+      "summer": "上午/下午(避正午暴晒)",
+      "autumn": "上午9:00-下午16:00",
+      "winter": "不宜垂钓"
+    },
+    "water_temp": { "optimal_min": 22, "optimal_max": 32 },
+    "habitat": "中上层，大水面，喜高温高氧环境",
+    "difficulty": "medium",
+    "tip": "鲢鳙合称，均为滤食性鱼类，关键在饵料雾化和味型(酸/臭)，钓浮为主"
+  }
+]
