@@ -1,6 +1,6 @@
 <template>
   <view class="history">
-    <CustomNav title="SCAN HISTORY" />
+    <CustomNav title="识别历史" />
     <LoginGuide v-if="!loggedIn" title="登录查看历史" desc="登录后可查看识别记录" @loggedIn="onLoggedIn" />
 
     <template v-else>

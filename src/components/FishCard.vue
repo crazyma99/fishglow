@@ -9,7 +9,7 @@
     <view class="fish-card__info">
       <text class="fish-card__name">{{ fish.name_zh }}</text>
       <view class="fish-card__meta">
-        <text v-if="fish.difficulty" class="fish-card__tag" :class="'fish-card__tag--' + fish.difficulty">{{ {easy:'EASY',medium:'MID',hard:'HARD'}[fish.difficulty] || fish.difficulty }}</text>
+        <text v-if="fish.difficulty" class="fish-card__tag" :class="'fish-card__tag--' + fish.difficulty">{{ {easy:'简单',medium:'中等',hard:'困难'}[fish.difficulty] || fish.difficulty }}</text>
         <text v-for="m in (fish.fishing_methods || []).slice(0, 1)" :key="m" class="fish-card__method">{{ m }}</text>
       </view>
     </view>

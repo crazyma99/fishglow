@@ -1,6 +1,6 @@
 <template>
   <view class="result">
-    <CustomNav title="SCAN RESULT" />
+    <CustomNav title="识别结果" />
     <!-- Hero 区: 大图 + 渐变遮罩 + 鱼名 -->
     <view class="hero">
       <image :src="fishCoverImage || imagePath" class="hero__img" mode="aspectFill" />
@@ -881,6 +881,8 @@ async function submitContribution() {
   box-shadow: 0 -8px 0 #222222;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
+  box-sizing: border-box;
 
   &__header {
     display: flex;
@@ -941,18 +943,21 @@ async function submitContribution() {
   }
 
   &__input {
+    width: 100%;
     border: 3px solid #222222;
     border-radius: 0;
     padding: 16rpx;
     font-size: 26rpx;
     color: #222222;
     background: #EEEEEE;
+    box-sizing: border-box;
   }
 
   &__hint {
     font-size: 24rpx;
     color: #A9A9A9;
     line-height: 1.5;
+    word-break: break-all;
   }
 
   &__tags {

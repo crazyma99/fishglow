@@ -34,9 +34,15 @@ defineProps({
 
 const statusBarHeight = ref(20);
 try {
-  const sys = uni.getSystemInfoSync();
-  statusBarHeight.value = sys.statusBarHeight || 20;
-} catch (e) {}
+  const info = uni.getWindowInfo();
+  statusBarHeight.value = info.statusBarHeight || 20;
+} catch (e) {
+  // fallback for older base libs
+  try {
+    const sys = uni.getSystemInfoSync();
+    statusBarHeight.value = sys.statusBarHeight || 20;
+  } catch (e2) {}
+}
 
 function goBack() {
   const pages = getCurrentPages();

@@ -1,6 +1,6 @@
 <template>
   <view class="detail" v-if="fish">
-    <CustomNav title="FISH DETAIL" />
+    <CustomNav title="鱼种详情" />
     <!-- 头部信息 -->
     <view class="header-card">
       <view class="header-card__left">

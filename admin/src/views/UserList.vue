@@ -8,10 +8,11 @@
         <div class="stat"><span class="stat__value">{{ users.reduce((s,u)=>s+u.history_count,0) }}</span><span class="stat__label">总识别</span></div>
       </div>
       <div class="table-wrap" v-if="users.length"><table class="table">
-        <thead><tr><th>OpenID</th><th>昵称</th><th>图鉴</th><th>识别</th><th>贡献</th><th>注册时间</th></tr></thead>
+        <thead><tr><th>头像</th><th>昵称</th><th>OpenID</th><th>图鉴</th><th>识别</th><th>贡献</th><th>注册时间</th></tr></thead>
         <tbody><tr v-for="u in users" :key="u.openid" @click="openUser(u)">
-          <td class="openid">{{ u.openid.slice(0,16) }}...</td>
+          <td><img v-if="u.avatar_url" :src="imgUrl(u.avatar_url)" class="avatar-sm" /><div v-else class="avatar-sm avatar-empty"></div></td>
           <td>{{ u.nickname || '未设置' }}</td>
+          <td class="openid">{{ u.openid.slice(0,16) }}...</td>
           <td><span class="tag tag--primary">{{ u.collection_count }}</span></td>
           <td><span class="tag tag--blue">{{ u.history_count }}</span></td>
           <td><span :class="'tag '+(u.contribution_count?'tag--success':'')">{{ u.contribution_count }}</span></td>
@@ -23,8 +24,12 @@
 
     <Drawer v-model="showDrawer" title="用户详情">
       <template v-if="current">
-        <div class="field"><label>OpenID</label><p class="openid-full">{{ current.openid }}</p></div>
+        <div class="field" style="text-align:center">
+          <img v-if="current.avatar_url" :src="imgUrl(current.avatar_url)" class="avatar-lg" />
+          <div v-else class="avatar-lg avatar-empty" style="margin:0 auto"></div>
+        </div>
         <div class="field"><label>昵称</label><p>{{ current.nickname || '未设置' }}</p></div>
+        <div class="field"><label>OpenID</label><p class="openid-full">{{ current.openid }}</p></div>
         <div class="field"><label>注册时间</label><p>{{ current.created_at }}</p></div>
         <div class="field"><label>数据统计</label>
           <div class="user-stats">
@@ -41,7 +46,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import Drawer from '../components/Drawer.vue';
-import { apiFetch, ADMIN_KEY } from '../utils/api';
+import { apiFetch, imgUrl, ADMIN_KEY } from '../utils/api';
 
 const users = ref([]);
 const showDrawer = ref(false);
@@ -79,4 +84,7 @@ function openUser(u) { current.value = u; showDrawer.value = true; }
 .user-stats { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-top: 8px; }
 .user-stat { text-align: center; padding: 12px; border-radius: var(--radius); font-size: 11px; color: var(--text-secondary); }
 .user-stat__num { display: block; font-size: 20px; font-weight: 700; }
+.avatar-sm { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; border: 1px solid var(--border); }
+.avatar-lg { width: 72px; height: 72px; border-radius: 50%; object-fit: cover; border: 2px solid var(--border); }
+.avatar-empty { background: var(--muted); display: flex; align-items: center; justify-content: center; }
 </style>

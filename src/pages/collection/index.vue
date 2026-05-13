@@ -1,6 +1,6 @@
 <template>
   <view class="collection">
-    <CustomNav title="COLLECTION ★" tab />
+    <CustomNav title="图鉴 ★" tab />
 
     <LoginGuide v-if="!loggedIn" title="登录查看图鉴" desc="登录后可收藏鱼种、查看收集进度" @loggedIn="onLoggedIn" />
 

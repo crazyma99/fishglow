@@ -1,6 +1,6 @@
 <template>
   <view class="fishdb">
-    <CustomNav title="FISH WIKI" tab />
+    <CustomNav title="鱼库" tab />
 
     <!-- Search -->
     <view class="search-bar">

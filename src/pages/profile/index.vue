@@ -1,6 +1,6 @@
 <template>
   <view class="profile">
-    <CustomNav title="MY PAGE" tab />
+    <CustomNav title="我的" tab />
 
     <!-- 未登录状态 -->
     <view v-if="!loggedIn" class="login-card" hover-class="login-card--active" @tap="handleLogin">
@@ -15,9 +15,15 @@
 
     <!-- 已登录状态 -->
     <view v-else class="user-card">
-      <image class="user-card__avatar" :src="avatar || ''" mode="aspectFill" />
+      <view class="user-card__avatar-wrap" hover-class="user-card__avatar-wrap--press" @tap="changeAvatar">
+        <image class="user-card__avatar" :src="avatar || ''" mode="aspectFill" />
+        <text class="user-card__avatar-edit">换</text>
+      </view>
       <view class="user-card__info">
-        <text class="user-card__name">{{ nickname }}</text>
+        <view class="user-card__name-row" hover-class="user-card__name-row--press" @tap="changeNickname">
+          <text class="user-card__name">{{ nickname }}</text>
+          <text class="user-card__name-edit">✎</text>
+        </view>
         <text class="user-card__id">渔光用户</text>
       </view>
     </view>
@@ -74,6 +80,7 @@ import { onShow } from '@dcloudio/uni-app';
 import BadgeItem from '../../components/BadgeItem.vue';
 import { isLoggedIn, ensureLogin, logout as authLogout, getOpenid } from '../../utils/auth';
 import { request } from '../../utils/api';
+import { API_BASE, IMG_BASE } from '../../utils/config';
 import CustomNav from '../../components/CustomNav.vue';
 
 const loggedIn = ref(false);
@@ -96,14 +103,26 @@ function checkLoginState() {
 
 async function loadProfile() {
   const openid = getOpenid();
-  nickname.value = uni.getStorageSync('user_nickname') || '渔友';
-  avatar.value = uni.getStorageSync('user_avatar') || '';
 
   try {
-    const res = await request({ url: '/user/stats', data: { openid } });
-    collectionCount.value = res.data.collection_count || 0;
-    identifyCount.value = res.data.history_count || 0;
-  } catch (e) {}
+    const [userRes, statsRes] = await Promise.all([
+      request({ url: '/user', data: { openid } }),
+      request({ url: '/user/stats', data: { openid } })
+    ]);
+    // 用户信息
+    if (userRes.data) {
+      nickname.value = userRes.data.nickname || '渔友';
+      avatar.value = userRes.data.avatar_url || '';
+      uni.setStorageSync('user_nickname', nickname.value);
+      uni.setStorageSync('user_avatar', avatar.value);
+    }
+    // 统计
+    collectionCount.value = statsRes.data.collection_count || 0;
+    identifyCount.value = statsRes.data.history_count || 0;
+  } catch (e) {
+    nickname.value = uni.getStorageSync('user_nickname') || '渔友';
+    avatar.value = uni.getStorageSync('user_avatar') || '';
+  }
 }
 
 async function handleLogin() {
@@ -112,6 +131,59 @@ async function handleLogin() {
     loggedIn.value = true;
     loadProfile();
   }
+}
+
+function changeAvatar() {
+  uni.chooseImage({
+    count: 1,
+    sizeType: ['compressed'],
+    sourceType: ['album', 'camera'],
+    success(res) {
+      const tempPath = res.tempFilePaths[0];
+      avatar.value = tempPath;
+      // 上传头像到服务器（复用 uploadFile 逻辑）
+      uni.uploadFile({
+        url: `${API_BASE}/recognize`,  // 复用图片上传接口存储
+        filePath: tempPath,
+        name: 'file',
+        success(uploadRes) {
+          const data = JSON.parse(uploadRes.data);
+          if (data.code === 0 && data.data.photo_url) {
+            const avatarUrl = IMG_BASE + data.data.photo_url;
+            avatar.value = avatarUrl;
+            uni.setStorageSync('user_avatar', avatarUrl);
+            // 同步到服务端用户表
+            request({
+              url: '/user/update',
+              method: 'POST',
+              data: { openid: getOpenid(), nickname: nickname.value, avatar_url: avatarUrl }
+            }).catch(() => {});
+          }
+        }
+      });
+    }
+  });
+}
+
+function changeNickname() {
+  uni.showModal({
+    title: '修改昵称',
+    editable: true,
+    placeholderText: nickname.value || '输入新昵称',
+    success(res) {
+      if (res.confirm && res.content && res.content.trim()) {
+        const newName = res.content.trim();
+        nickname.value = newName;
+        uni.setStorageSync('user_nickname', newName);
+        // 同步到服务端
+        request({
+          url: '/user/update',
+          method: 'POST',
+          data: { openid: getOpenid(), nickname: newName, avatar_url: avatar.value || '' }
+        }).catch(() => {});
+      }
+    }
+  });
 }
 
 function goHistory() {
@@ -223,6 +295,17 @@ function handleLogout() {
   padding: 32rpx 24rpx;
   margin-bottom: 32rpx;
 
+  &__avatar-wrap {
+    position: relative;
+    width: 96rpx;
+    height: 96rpx;
+    flex-shrink: 0;
+  }
+
+  &__avatar-wrap--press {
+    opacity: 0.7;
+  }
+
   &__avatar {
     width: 96rpx;
     height: 96rpx;
@@ -230,8 +313,34 @@ function handleLogout() {
     background: #D8D8D8;
   }
 
+  &__avatar-edit {
+    position: absolute;
+    bottom: -4rpx;
+    right: -4rpx;
+    width: 32rpx;
+    height: 32rpx;
+    background: #FF590E;
+    color: #FFFFFF;
+    font-size: 18rpx;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #222222;
+  }
+
   &__info {
     flex: 1;
+  }
+
+  &__name-row {
+    display: flex;
+    align-items: center;
+    gap: 8rpx;
+  }
+
+  &__name-row--press {
+    opacity: 0.7;
   }
 
   &__name {
@@ -241,9 +350,16 @@ function handleLogout() {
     color: #222222;
   }
 
+  &__name-edit {
+    font-size: 24rpx;
+    color: #A9A9A9;
+  }
+
   &__id {
     font-size: 24rpx;
     color: #A9A9A9;
+    display: block;
+    margin-top: 4rpx;
     margin-top: 4rpx;
   }
 }

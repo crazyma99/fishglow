@@ -8,6 +8,8 @@ onLaunch(() => {
     family: 'SpaceGrotesk',
     source: `url("${IMG_BASE}/assets/fonts/SpaceGrotesk-Bold.ttf")`,
     global: true,
+    scopes: ['webview', 'native'],
+    desc: { style: 'normal', weight: 'bold' },
     success() { console.log('[font] SpaceGrotesk loaded'); },
     fail(e) { console.warn('[font] SpaceGrotesk failed:', e); }
   });

@@ -1,6 +1,6 @@
 <template>
   <view class="contributions">
-    <CustomNav title="MY CONTRIBUTIONS" />
+    <CustomNav title="我的贡献" />
     <LoginGuide v-if="!loggedIn" title="登录查看贡献" desc="登录后可查看你提交的鱼种数据" @loggedIn="onLoggedIn" />
 
     <view v-for="item in list" v-if="loggedIn" :key="item.id" class="contrib-item" hover-class="contrib-item--active" @tap="goDetail(item)">

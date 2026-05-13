@@ -5,7 +5,7 @@
     <!-- 每日一鱼 -->
     <view class="card" hover-class="card--press" @tap="goFishDetail(dailyFish)">
       <view class="card__head">
-        <text class="card__tag card__tag--green">★ TODAY'S CATCH</text>
+        <text class="card__tag card__tag--green">★ 每日一鱼</text>
         <text class="card__sub">{{ todayDate }}</text>
       </view>
       <view class="daily" v-if="dailyFish">
@@ -20,7 +20,7 @@
     <!-- 本周挑战 -->
     <view class="card">
       <view class="card__head">
-        <text class="card__tag card__tag--orange">WEEKLY QUEST</text>
+        <text class="card__tag card__tag--orange">本周挑战</text>
       </view>
       <text class="quest__label">识别 5 种不同的鱼</text>
       <view class="quest__bar">
@@ -32,7 +32,7 @@
     <!-- 当季活跃 -->
     <view class="card">
       <view class="card__head">
-        <text class="card__tag card__tag--green">HOT THIS SEASON 🔥</text>
+        <text class="card__tag card__tag--green">当季活跃 🔥</text>
       </view>
       <scroll-view scroll-x class="season-scroll">
         <view class="season-list">
@@ -47,19 +47,19 @@
     <view class="shortcuts">
       <view class="shortcut" hover-class="shortcut--press" @tap="goHistory">
         <image class="shortcut__icon" src="/static/icons/primary/history.svg" mode="aspectFit" />
-        <text class="shortcut__text">SCAN HISTORY</text>
+        <text class="shortcut__text">识别历史</text>
       </view>
       <view class="shortcut" hover-class="shortcut--press" @tap="goAchievement">
         <image class="shortcut__icon" src="/static/icons/primary/trophy.svg" mode="aspectFit" />
-        <text class="shortcut__text">MY BADGES ★</text>
+        <text class="shortcut__text">我的成就 ★</text>
       </view>
       <view class="shortcut" hover-class="shortcut--press" @tap="goFishDb">
         <image class="shortcut__icon" src="/static/icons/primary/fish.svg" mode="aspectFit" />
-        <text class="shortcut__text">FISH WIKI</text>
+        <text class="shortcut__text">鱼类百科</text>
       </view>
       <view class="shortcut" hover-class="shortcut--press" @tap="goFishing">
         <image class="shortcut__icon" src="/static/icons/primary/star.svg" mode="aspectFit" />
-        <text class="shortcut__text">GO FISHING</text>
+        <text class="shortcut__text">去钓鱼</text>
       </view>
     </view>
   </view>
@@ -120,7 +120,7 @@ function goFishDetail(fish) {
 function goHistory() { uni.navigateTo({ url: '/pages/history/index' }); }
 function goAchievement() { uni.navigateTo({ url: '/pages/achievement/index' }); }
 function goFishDb() { uni.switchTab({ url: '/pages/fishdb/index' }); }
-function goFishing() { uni.showToast({ title: 'COMING SOON...', icon: 'none' }); }
+function goFishing() { uni.showToast({ title: '功能开发中', icon: 'none' }); }
 </script>
 
 <style lang="scss" scoped>

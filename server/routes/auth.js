@@ -18,7 +18,9 @@ router.post('/openid', async (req, res) => {
 
     if (!data.openid) return res.json({ code: 1, msg: data.errmsg || '登录失败' });
 
-    db.prepare('INSERT OR IGNORE INTO users (openid) VALUES (?)').run(data.openid);
+    // 自动建用户，默认昵称: 渔友 + openid 后4位
+    const defaultNickname = '渔友 ' + data.openid.slice(-4);
+    db.prepare('INSERT OR IGNORE INTO users (openid, nickname) VALUES (?, ?)').run(data.openid, defaultNickname);
     res.json({ code: 0, data: { openid: data.openid } });
   } catch (err) {
     res.json({ code: 1, msg: err.message });

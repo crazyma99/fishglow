@@ -1,6 +1,6 @@
 <template>
   <view class="detail" v-if="item">
-    <CustomNav title="CONTRIBUTION" />
+    <CustomNav title="贡献详情" />
     <!-- 状态头部 -->
     <view class="status-banner" :class="'status-banner--' + item.status">
       <text class="status-banner__label">{{ statusLabel(item.status) }}</text>

@@ -1,6 +1,6 @@
 <template>
   <view class="achievement">
-    <CustomNav title="BADGES ★" />
+    <CustomNav title="成就 ★" />
     <LoginGuide v-if="!loggedIn" title="登录查看成就" desc="登录后可解锁勋章和查看成就" @loggedIn="onLoggedIn" />
 
     <view v-else class="grid">

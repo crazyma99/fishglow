@@ -1,10 +1,10 @@
 <template>
   <view class="login-guide" @tap="handleLogin">
     <image class="login-guide__icon" src="/static/icons/muted/fish.svg" mode="aspectFit" />
-    <text class="login-guide__title">{{ title || 'LOGIN REQUIRED' }}</text>
+    <text class="login-guide__title">{{ title || '请先登录' }}</text>
     <text class="login-guide__desc">{{ desc || '登录后可使用完整功能' }}</text>
     <view class="login-guide__btn" hover-class="login-guide__btn--press">
-      <text class="login-guide__btn-text">★ LOGIN ★</text>
+      <text class="login-guide__btn-text">★ 点击登录 ★</text>
     </view>
   </view>
 </template>
