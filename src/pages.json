@@ -1,0 +1,59 @@
+{
+  "pages": [
+    { "path": "pages/home/index", "style": { "navigationBarTitleText": "渔光", "enablePullDownRefresh": true } },
+    { "path": "pages/fishdb/index", "style": { "navigationBarTitleText": "鱼库", "enablePullDownRefresh": true } },
+    { "path": "pages/identify/index", "style": { "navigationBarTitleText": "识鱼", "navigationStyle": "custom" } },
+    { "path": "pages/collection/index", "style": { "navigationBarTitleText": "图鉴", "enablePullDownRefresh": true } },
+    { "path": "pages/profile/index", "style": { "navigationBarTitleText": "我的" } },
+    { "path": "pages/result/index", "style": { "navigationBarTitleText": "识别结果" } },
+    { "path": "pages/fish-detail/index", "style": { "navigationBarTitleText": "鱼种详情" } },
+    { "path": "pages/achievement/index", "style": { "navigationBarTitleText": "成就墙" } },
+    { "path": "pages/history/index", "style": { "navigationBarTitleText": "识别历史" } },
+    { "path": "pages/contributions/index", "style": { "navigationBarTitleText": "我的贡献" } },
+    { "path": "pages/contribution-detail/index", "style": { "navigationBarTitleText": "贡献详情" } }
+  ],
+  "globalStyle": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "渔光",
+    "navigationBarBackgroundColor": "#FFFFFF",
+    "backgroundColor": "#FAFBFC"
+  },
+  "tabBar": {
+    "color": "#94A3B8",
+    "selectedColor": "#EA580C",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/home/index",
+        "text": "首页",
+        "iconPath": "static/tabbar/home.png",
+        "selectedIconPath": "static/tabbar/home-active.png"
+      },
+      {
+        "pagePath": "pages/fishdb/index",
+        "text": "鱼库",
+        "iconPath": "static/tabbar/fish.png",
+        "selectedIconPath": "static/tabbar/fish-active.png"
+      },
+      {
+        "pagePath": "pages/identify/index",
+        "text": "识鱼",
+        "iconPath": "static/tabbar/camera.png",
+        "selectedIconPath": "static/tabbar/camera-active.png"
+      },
+      {
+        "pagePath": "pages/collection/index",
+        "text": "图鉴",
+        "iconPath": "static/tabbar/bookmark.png",
+        "selectedIconPath": "static/tabbar/bookmark-active.png"
+      },
+      {
+        "pagePath": "pages/profile/index",
+        "text": "我的",
+        "iconPath": "static/tabbar/star.png",
+        "selectedIconPath": "static/tabbar/star-active.png"
+      }
+    ]
+  }
+}

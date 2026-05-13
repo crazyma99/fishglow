@@ -1,0 +1,13 @@
+node_modules/
+dist/
+server/db/fishglow.db
+server/db/fishglow.db-shm
+server/db/fishglow.db-wal
+server/.env
+server/ssl/
+server/public/photos/
+server/public/fish-covers/
+.DS_Store
+*.log
+admin/node_modules/
+admin/dist/

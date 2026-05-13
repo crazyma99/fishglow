@@ -1,0 +1,21 @@
+{
+  "name": "渔光",
+  "appid": "__UNI__FISHGLOW",
+  "description": "钓鱼AI识别工具",
+  "versionName": "1.0.0",
+  "versionCode": "100",
+  "transformPx": false,
+  "mp-weixin": {
+    "appid": "wxd73380ffc5598f8c",
+    "setting": {
+      "urlCheck": false,
+      "es6": true,
+      "postcss": true,
+      "minified": true,
+      "ignoreDevUnusedFiles": false,
+      "ignoreUploadUnusedFiles": false
+    },
+    "usingComponents": true,
+    "requiredPrivateInfos": ["chooseImage"]
+  }
+}
