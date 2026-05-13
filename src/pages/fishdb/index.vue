@@ -1,5 +1,7 @@
 <template>
   <view class="fishdb">
+    <CustomNav title="FISH WIKI" tab />
+
     <!-- Search -->
     <view class="search-bar">
       <input class="search-bar__input" placeholder="搜索鱼种..." v-model="keyword" />
@@ -38,6 +40,7 @@ import { ref, computed, onMounted } from 'vue';
 import { onPullDownRefresh } from '@dcloudio/uni-app';
 import { request } from '../../utils/api';
 import FishCard from '../../components/FishCard.vue';
+import CustomNav from '../../components/CustomNav.vue';
 
 const tabs = ['全部', '台钓', '路亚', '传统钓', '抛竿'];
 const activeTab = ref('全部');
@@ -86,42 +89,58 @@ function goDetail(fish) {
 <style lang="scss" scoped>
 .fishdb {
   padding: 24rpx;
+  background: #F6F6F6;
+  min-height: 100vh;
 }
 
 .search-bar {
-  margin-bottom: 16rpx;
+  margin-bottom: 24rpx;
+  padding-bottom: 8rpx;
 
   &__input {
-    background: #FFFFFF;
-    border: 1px solid #E2E8F0;
-    border-radius: 4rpx;
+    background: #EEEEEE;
+    border: 3px solid #222222;
+    border-radius: 0;
     padding: 16rpx 24rpx;
     font-size: 28rpx;
+    color: #222222;
+    box-shadow: 4px 4px 0 #222222;
   }
 }
 
 .tabs {
   margin-bottom: 24rpx;
   white-space: nowrap;
+  padding-bottom: 8rpx;
 
   &__list {
     display: inline-flex;
     gap: 16rpx;
+    padding-bottom: 8rpx;
   }
 
   &__item {
     padding: 12rpx 24rpx;
     font-size: 26rpx;
-    color: #64748B;
-    background: #FFFFFF;
-    border: 1px solid #E2E8F0;
-    border-radius: 4rpx;
+    color: #A9A9A9;
+    background: #EEEEEE;
+    border: 3px solid #222222;
+    border-radius: 0;
     display: inline-block;
+    font-family: 'SpaceGrotesk', -apple-system, 'PingFang SC', sans-serif;
+    font-weight: 900;
+    box-shadow: 4px 4px 0 #222222;
+    transition: box-shadow 150ms, transform 150ms;
+
+    &:active {
+      box-shadow: none;
+      transform: translate(4px, 4px);
+    }
 
     &--active {
-      color: #EA580C;
-      background: #FFF7ED;
-      border-color: #EA580C;
+      color: #222222;
+      background: #B4EF4E;
+      border-color: #222222;
     }
   }
 }
@@ -141,7 +160,7 @@ function goDetail(fish) {
   text-align: center;
 
   &__text {
-    color: #94A3B8;
+    color: #A9A9A9;
     font-size: 28rpx;
   }
 }

@@ -32,7 +32,7 @@ defineProps({
       opacity: 0.5;
     }
     .badge-item__name {
-      color: #94A3B8;
+      color: #A9A9A9;
     }
   }
 
@@ -43,6 +43,10 @@ defineProps({
     display: flex;
     align-items: center;
     justify-content: center;
+    border: 3px solid #222222;
+    border-radius: 0;
+    box-shadow: 4px 4px 0 #222222;
+    background: #EEEEEE;
   }
 
   &__icon {
@@ -57,10 +61,11 @@ defineProps({
 
   &__lock {
     position: absolute;
-    bottom: 0;
-    right: 0;
-    background: rgba(0, 0, 0, 0.5);
-    border-radius: 50%;
+    bottom: -4rpx;
+    right: -4rpx;
+    background: #222222;
+    border-radius: 0;
+    border: 2px solid #222222;
     width: 36rpx;
     height: 36rpx;
     display: flex;
@@ -76,13 +81,14 @@ defineProps({
   &__name {
     margin-top: 8rpx;
     font-size: 24rpx;
-    color: #1E293B;
+    font-weight: bold;
+    color: #222222;
     text-align: center;
   }
 
   &__date {
     font-size: 20rpx;
-    color: #64748B;
+    color: #A9A9A9;
     margin-top: 4rpx;
   }
 }

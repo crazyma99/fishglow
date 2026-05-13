@@ -24,9 +24,9 @@ router.post('/upload-cover', upload.single('image'), async (req, res) => {
     const fish = db.prepare('SELECT id, name_zh FROM fish WHERE id = ?').get(fish_id);
     if (!fish) return res.json({ code: 1, msg: '鱼种不存在' });
 
-    // 裁剪为 600x400 (3:2 比例)，与小程序卡片展示比例一致
+    // 裁剪为 640x360 (16:9 比例)，与小程序卡片展示比例一致
     const processed = await sharp(req.file.buffer)
-      .resize(600, 400, { fit: 'cover', position: 'centre' })
+      .resize(640, 360, { fit: 'cover', position: 'centre' })
       .jpeg({ quality: 85 })
       .toBuffer();
 

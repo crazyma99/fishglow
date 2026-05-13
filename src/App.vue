@@ -1,12 +1,25 @@
 <script setup>
-// 不自动登录，需要时由各页面调用 ensureLogin()
+import { onLaunch } from '@dcloudio/uni-app';
+import { IMG_BASE } from './utils/config';
+
+onLaunch(() => {
+  // 加载英文氛围字体 Space Grotesk Bold (68KB)
+  uni.loadFontFace({
+    family: 'SpaceGrotesk',
+    source: `url("${IMG_BASE}/assets/fonts/SpaceGrotesk-Bold.ttf")`,
+    global: true,
+    success() { console.log('[font] SpaceGrotesk loaded'); },
+    fail(e) { console.warn('[font] SpaceGrotesk failed:', e); }
+  });
+});
 </script>
 
 <style>
 page {
   font-family: -apple-system, 'PingFang SC', sans-serif;
   font-size: 28rpx;
-  color: #1E293B;
-  background: #FAFBFC;
+  color: #222222;
+  background: #F6F6F6;
 }
+
 </style>

@@ -1,5 +1,6 @@
 <template>
   <view class="contributions">
+    <CustomNav title="MY CONTRIBUTIONS" />
     <LoginGuide v-if="!loggedIn" title="登录查看贡献" desc="登录后可查看你提交的鱼种数据" @loggedIn="onLoggedIn" />
 
     <view v-for="item in list" v-if="loggedIn" :key="item.id" class="contrib-item" hover-class="contrib-item--active" @tap="goDetail(item)">
@@ -23,6 +24,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
+import CustomNav from '../../components/CustomNav.vue';
 import { request } from '../../utils/api';
 import { getOpenid, isLoggedIn } from '../../utils/auth';
 import LoginGuide from '../../components/LoginGuide.vue';
@@ -70,17 +72,23 @@ function goDetail(item) {
 <style lang="scss" scoped>
 .contributions {
   padding: 24rpx;
+  background: #F6F6F6;
+  min-height: 100vh;
 }
 
 .contrib-item {
-  background: #FFFFFF;
-  border: 1px solid #E2E8F0;
-  border-radius: 4rpx;
+  background: #EEEEEE;
+  border: 3px solid #222222;
+  border-radius: 0;
   padding: 20rpx;
   margin-bottom: 16rpx;
-  transition: opacity 150ms;
+  box-shadow: 4px 4px 0 #222222;
+  transition: box-shadow 150ms, transform 150ms;
 
-  &--active { opacity: 0.7; }
+  &--active {
+    box-shadow: none;
+    transform: translate(4px, 4px);
+  }
 
   &__header {
     display: flex;
@@ -90,15 +98,18 @@ function goDetail(item) {
 
   &__name {
     font-size: 30rpx;
-    font-weight: bold;
-    color: #1E293B;
+    font-weight: 900;
+    color: #222222;
+    font-family: 'SpaceGrotesk', -apple-system, 'PingFang SC', sans-serif;
   }
 
   &__status {
     font-size: 22rpx;
     padding: 6rpx 16rpx;
-    border-radius: 4rpx;
-    font-weight: 600;
+    border-radius: 0;
+    font-weight: 900;
+    font-family: 'SpaceGrotesk', -apple-system, 'PingFang SC', sans-serif;
+    border: 2px solid #222222;
   }
 
   &__meta {
@@ -109,13 +120,13 @@ function goDetail(item) {
 
   &__date {
     font-size: 22rpx;
-    color: #64748B;
+    color: #A9A9A9;
   }
 }
 
-.status--pending { background: #FEFCE8; color: #CA8A04; }
-.status--approved { background: #F0FDF4; color: #16A34A; }
-.status--rejected { background: #FEF2F2; color: #DC2626; }
+.status--pending { background: #FF590E; color: #FFFFFF; border: 2px solid #222222; border-radius: 0; }
+.status--approved { background: #B4EF4E; color: #222222; border: 2px solid #222222; border-radius: 0; }
+.status--rejected { background: #D8D8D8; color: #222222; border: 2px solid #222222; border-radius: 0; }
 
 .empty {
   display: flex;
@@ -124,7 +135,7 @@ function goDetail(item) {
   padding: 160rpx 0;
 
   &__icon { width: 80rpx; height: 80rpx; opacity: 0.3; margin-bottom: 16rpx; }
-  &__text { font-size: 28rpx; color: #64748B; }
-  &__sub { font-size: 24rpx; color: #94A3B8; margin-top: 8rpx; }
+  &__text { font-size: 28rpx; color: #A9A9A9; }
+  &__sub { font-size: 24rpx; color: #A9A9A9; margin-top: 8rpx; }
 }
 </style>

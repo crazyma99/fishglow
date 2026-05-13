@@ -1,12 +1,14 @@
 <template>
   <view class="profile">
+    <CustomNav title="MY PAGE" tab />
+
     <!-- 未登录状态 -->
     <view v-if="!loggedIn" class="login-card" hover-class="login-card--active" @tap="handleLogin">
       <view class="login-card__icon-wrap">
         <image class="login-card__icon" src="/static/icons/primary/star.svg" mode="aspectFit" />
       </view>
       <view class="login-card__info">
-        <text class="login-card__title">点击登录</text>
+        <text class="login-card__title">★ LOGIN ★</text>
         <text class="login-card__desc">登录后可收藏图鉴、查看历史记录</text>
       </view>
     </view>
@@ -72,6 +74,7 @@ import { onShow } from '@dcloudio/uni-app';
 import BadgeItem from '../../components/BadgeItem.vue';
 import { isLoggedIn, ensureLogin, logout as authLogout, getOpenid } from '../../utils/auth';
 import { request } from '../../utils/api';
+import CustomNav from '../../components/CustomNav.vue';
 
 const loggedIn = ref(false);
 const avatar = ref('');
@@ -156,31 +159,34 @@ function handleLogout() {
 <style lang="scss" scoped>
 .profile {
   padding: 24rpx;
+  background: #F6F6F6;
+  min-height: 100vh;
 }
 
 .login-card {
   display: flex;
   align-items: center;
   gap: 24rpx;
-  background: #FFFFFF;
-  border: 1px solid #E2E8F0;
-  border-radius: 4rpx;
+  background: #B4EF4E;
+  border: 3px solid #222222;
+  box-shadow: 4px 4px 0 #222222;
   padding: 40rpx 24rpx;
-  margin-bottom: 24rpx;
-  transition: opacity 150ms;
+  margin-bottom: 32rpx;
+  transition: transform 100ms, box-shadow 100ms;
 
   &--active {
-    opacity: 0.7;
+    box-shadow: none;
+    transform: translate(4px, 4px);
   }
 
   &__icon-wrap {
     width: 80rpx;
     height: 80rpx;
-    border-radius: 50%;
-    background: #FFF7ED;
+    background: #222222;
     display: flex;
     align-items: center;
     justify-content: center;
+    border: 2px solid #222222;
   }
 
   &__icon {
@@ -193,14 +199,16 @@ function handleLogout() {
   }
 
   &__title {
+    font-family: 'SpaceGrotesk', -apple-system, 'PingFang SC', sans-serif;
     font-size: 32rpx;
-    font-weight: bold;
-    color: #EA580C;
+    font-weight: 900;
+    color: #222222;
   }
 
   &__desc {
     font-size: 24rpx;
-    color: #64748B;
+    color: #222222;
+    opacity: 0.7;
     margin-top: 4rpx;
   }
 }
@@ -209,17 +217,17 @@ function handleLogout() {
   display: flex;
   align-items: center;
   gap: 24rpx;
-  background: #FFFFFF;
-  border: 1px solid #E2E8F0;
-  border-radius: 4rpx;
+  background: #EEEEEE;
+  border: 3px solid #222222;
+  box-shadow: 4px 4px 0 #222222;
   padding: 32rpx 24rpx;
-  margin-bottom: 24rpx;
+  margin-bottom: 32rpx;
 
   &__avatar {
     width: 96rpx;
     height: 96rpx;
-    border-radius: 50%;
-    background: #F1F5F9;
+    border: 3px solid #222222;
+    background: #D8D8D8;
   }
 
   &__info {
@@ -227,25 +235,26 @@ function handleLogout() {
   }
 
   &__name {
+    font-family: 'SpaceGrotesk', -apple-system, 'PingFang SC', sans-serif;
     font-size: 32rpx;
-    font-weight: bold;
-    color: #1E293B;
+    font-weight: 900;
+    color: #222222;
   }
 
   &__id {
     font-size: 24rpx;
-    color: #64748B;
+    color: #A9A9A9;
     margin-top: 4rpx;
   }
 }
 
 .stats {
   display: flex;
-  background: #FFFFFF;
-  border: 1px solid #E2E8F0;
-  border-radius: 4rpx;
+  background: #EEEEEE;
+  border: 3px solid #222222;
+  box-shadow: 4px 4px 0 #222222;
   padding: 32rpx;
-  margin-bottom: 24rpx;
+  margin-bottom: 32rpx;
 
   &__item {
     flex: 1;
@@ -253,35 +262,38 @@ function handleLogout() {
   }
 
   &__divider {
-    width: 1px;
-    background: #E2E8F0;
+    width: 3px;
+    background: #222222;
   }
 
   &__num {
-    font-size: 40rpx;
-    font-weight: bold;
-    color: #EA580C;
+    font-family: 'SpaceGrotesk', -apple-system, 'PingFang SC', sans-serif;
+    font-size: 48rpx;
+    font-weight: 900;
+    color: #FF590E;
     display: block;
   }
 
   &__label {
-    font-size: 24rpx;
-    color: #64748B;
+    font-size: 22rpx;
+    color: #A9A9A9;
+    font-weight: 700;
     margin-top: 4rpx;
   }
 }
 
 .card {
-  background: #FFFFFF;
-  border: 1px solid #E2E8F0;
-  border-radius: 4rpx;
+  background: #EEEEEE;
+  border: 3px solid #222222;
+  box-shadow: 4px 4px 0 #222222;
   padding: 24rpx;
-  margin-bottom: 24rpx;
+  margin-bottom: 32rpx;
 
   &__title {
-    font-size: 28rpx;
-    font-weight: bold;
-    color: #1E293B;
+    font-family: 'SpaceGrotesk', -apple-system, 'PingFang SC', sans-serif;
+    font-size: 24rpx;
+    font-weight: 900;
+    color: #222222;
     margin-bottom: 16rpx;
     display: block;
   }
@@ -293,24 +305,24 @@ function handleLogout() {
 }
 
 .menu {
-  background: #FFFFFF;
-  border: 1px solid #E2E8F0;
-  border-radius: 4rpx;
+  background: #EEEEEE;
+  border: 3px solid #222222;
+  box-shadow: 4px 4px 0 #222222;
 
   &__item {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 28rpx 24rpx;
-    border-bottom: 1px solid #F1F5F9;
-    transition: opacity 150ms;
+    border-bottom: 3px solid #D8D8D8;
+    transition: transform 100ms, box-shadow 100ms;
 
     &:last-child {
       border-bottom: none;
     }
 
     &--active {
-      opacity: 0.7;
+      background: #D8D8D8;
     }
 
     &--danger {
@@ -320,16 +332,18 @@ function handleLogout() {
 
   &__text {
     font-size: 28rpx;
-    color: #1E293B;
+    font-weight: 700;
+    color: #222222;
 
     &--danger {
-      color: #DC2626;
+      color: #FF590E;
     }
   }
 
   &__arrow {
     font-size: 32rpx;
-    color: #94A3B8;
+    font-weight: 900;
+    color: #222222;
   }
 }
 </style>

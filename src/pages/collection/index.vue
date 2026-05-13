@@ -1,5 +1,7 @@
 <template>
   <view class="collection">
+    <CustomNav title="COLLECTION ★" tab />
+
     <LoginGuide v-if="!loggedIn" title="登录查看图鉴" desc="登录后可收藏鱼种、查看收集进度" @loggedIn="onLoggedIn" />
 
     <template v-else>
@@ -32,6 +34,7 @@ import { onShow, onPullDownRefresh } from '@dcloudio/uni-app';
 import { request } from '../../utils/api';
 import { getOpenid, isLoggedIn } from '../../utils/auth';
 import LoginGuide from '../../components/LoginGuide.vue';
+import CustomNav from '../../components/CustomNav.vue';
 
 const loggedIn = ref(false);
 
@@ -119,6 +122,8 @@ function goDetail(item) {
 <style lang="scss" scoped>
 .collection {
   padding: 24rpx;
+  background: #F6F6F6;
+  min-height: 100vh;
 }
 
 .stats-header {
@@ -126,12 +131,15 @@ function goDetail(item) {
 
   &__text {
     font-size: 28rpx;
-    color: #64748B;
+    color: #A9A9A9;
+    font-family: 'SpaceGrotesk', -apple-system, 'PingFang SC', sans-serif;
+    font-weight: 900;
   }
 
   &__num {
-    color: #EA580C;
-    font-weight: bold;
+    color: #FF590E;
+    font-family: 'SpaceGrotesk', -apple-system, 'PingFang SC', sans-serif;
+    font-weight: 900;
   }
 }
 
@@ -141,12 +149,19 @@ function goDetail(item) {
   gap: 16rpx;
 
   &__item {
-    background: #FFFFFF;
-    border: 1px solid #E2E8F0;
-    border-radius: 4rpx;
+    background: #EEEEEE;
+    border: 3px solid #222222;
+    border-radius: 0;
     overflow: hidden;
     text-align: center;
     padding-bottom: 12rpx;
+    box-shadow: 4px 4px 0 #222222;
+    transition: box-shadow 150ms, transform 150ms;
+
+    &:active {
+      box-shadow: none;
+      transform: translate(4px, 4px);
+    }
 
     &--locked {
       opacity: 0.5;
@@ -165,18 +180,22 @@ function goDetail(item) {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #F1F5F9;
+    background: #D8D8D8;
   }
 
   &__placeholder-text {
     font-size: 48rpx;
-    color: #94A3B8;
+    color: #A9A9A9;
+    font-family: 'SpaceGrotesk', -apple-system, 'PingFang SC', sans-serif;
+    font-weight: 900;
   }
 
   &__name {
     font-size: 24rpx;
-    color: #1E293B;
+    color: #222222;
     margin-top: 8rpx;
+    font-family: 'SpaceGrotesk', -apple-system, 'PingFang SC', sans-serif;
+    font-weight: 900;
   }
 }
 </style>

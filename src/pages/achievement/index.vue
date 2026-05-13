@@ -1,5 +1,6 @@
 <template>
   <view class="achievement">
+    <CustomNav title="BADGES ★" />
     <LoginGuide v-if="!loggedIn" title="登录查看成就" desc="登录后可解锁勋章和查看成就" @loggedIn="onLoggedIn" />
 
     <view v-else class="grid">
@@ -61,6 +62,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
+import CustomNav from '../../components/CustomNav.vue';
 import { request } from '../../utils/api';
 import { getOpenid, isLoggedIn } from '../../utils/auth';
 import LoginGuide from '../../components/LoginGuide.vue';
@@ -88,6 +90,9 @@ const showModal = ref(false);
 const currentBadge = ref({});
 const collectionCount = ref(0);
 
+// 勋章图片 URL 缓存（固定资源，只请求一次）
+let badgeUrlsCache = null;
+
 onMounted(() => {
   loadBadges();
 });
@@ -95,32 +100,33 @@ onMounted(() => {
 async function loadBadges() {
   let unlockedMap = {};
 
-  if (isLoggedIn()) {
-    try {
-      const res = await request({
-        url: '/achievements',
-        data: { openid: getOpenid() }
-      });
-      (res.data || []).forEach(a => { unlockedMap[a.badge_id] = a.unlocked_at; });
-    } catch (e) {}
+  // 并行请求：badges 只请求一次，后续复用缓存
+  const promises = [];
 
-    try {
-      const stats = await request({ url: '/user/stats', data: { openid: getOpenid() } });
-      collectionCount.value = stats.data.collection_count || 0;
-    } catch (e) {}
+  if (!badgeUrlsCache) {
+    promises.push(
+      request({ url: '/badges' }).then(res => { badgeUrlsCache = res.data || {}; }).catch(() => { badgeUrlsCache = {}; })
+    );
   }
 
-  let badgeUrls = {};
-  try {
-    const res = await request({ url: '/badges' });
-    badgeUrls = res.data || {};
-  } catch (e) {}
+  if (isLoggedIn()) {
+    promises.push(
+      request({ url: '/achievements', data: { openid: getOpenid() } })
+        .then(res => { (res.data || []).forEach(a => { unlockedMap[a.badge_id] = a.unlocked_at; }); })
+        .catch(() => {}),
+      request({ url: '/user/stats', data: { openid: getOpenid() } })
+        .then(res => { collectionCount.value = res.data.collection_count || 0; })
+        .catch(() => {})
+    );
+  }
+
+  await Promise.all(promises);
 
   allBadges.value = BADGE_LIST.map(b => ({
     ...b,
     unlocked: !!unlockedMap[b.badge_id],
     unlocked_at: unlockedMap[b.badge_id] || '',
-    image_url: badgeUrls[b.badge_id] || ''
+    image_url: (badgeUrlsCache || {})[b.badge_id] || ''
   }));
 }
 
@@ -139,6 +145,8 @@ function formatDate(ts) {
 <style lang="scss" scoped>
 .achievement {
   padding: 24rpx;
+  background: #F6F6F6;
+  min-height: 100vh;
 }
 
 .grid {
@@ -151,14 +159,16 @@ function formatDate(ts) {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: #FFFFFF;
-  border: 1px solid #E2E8F0;
-  border-radius: 4rpx;
+  background: #EEEEEE;
+  border: 3px solid #222222;
+  border-radius: 0;
+  box-shadow: 4px 4px 0 #222222;
   padding: 24rpx 16rpx;
-  transition: opacity 150ms;
+  transition: box-shadow 150ms, transform 150ms;
 
   &:active {
-    opacity: 0.7;
+    box-shadow: none;
+    transform: translate(4px, 4px);
   }
 
   &--locked {
@@ -167,7 +177,7 @@ function formatDate(ts) {
       opacity: 0.4;
     }
     .badge-wrap__name {
-      color: #94A3B8;
+      color: #A9A9A9;
     }
   }
 
@@ -204,18 +214,18 @@ function formatDate(ts) {
     margin-top: 12rpx;
     font-size: 26rpx;
     font-weight: bold;
-    color: #1E293B;
+    color: #222222;
   }
 
   &__date {
     font-size: 20rpx;
-    color: #16A34A;
+    color: #B4EF4E;
     margin-top: 4rpx;
   }
 
   &__condition {
     font-size: 20rpx;
-    color: #94A3B8;
+    color: #A9A9A9;
     margin-top: 4rpx;
   }
 }
@@ -226,7 +236,7 @@ function formatDate(ts) {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.6);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -235,8 +245,10 @@ function formatDate(ts) {
 
 .modal {
   width: 560rpx;
-  background: #FFFFFF;
-  border-radius: 4rpx;
+  background: #F6F6F6;
+  border: 3px solid #222222;
+  border-radius: 0;
+  box-shadow: 8px 8px 0 #222222;
   padding: 48rpx 32rpx 32rpx;
   display: flex;
   flex-direction: column;
@@ -254,9 +266,10 @@ function formatDate(ts) {
   }
 
   &__name {
+    font-family: 'SpaceGrotesk', -apple-system, 'PingFang SC', sans-serif;
+    font-weight: 900;
     font-size: 32rpx;
-    font-weight: bold;
-    color: #1E293B;
+    color: #222222;
     margin-bottom: 24rpx;
   }
 
@@ -268,36 +281,44 @@ function formatDate(ts) {
     display: flex;
     justify-content: space-between;
     padding: 16rpx 0;
-    border-bottom: 1px solid #F1F5F9;
+    border-bottom: 3px solid #D8D8D8;
   }
 
   &__label {
     font-size: 26rpx;
-    color: #64748B;
+    color: #A9A9A9;
   }
 
   &__value {
     font-size: 26rpx;
-    color: #1E293B;
+    color: #222222;
 
     &--success {
-      color: #16A34A;
+      color: #B4EF4E;
     }
     &--locked {
-      color: #94A3B8;
+      color: #A9A9A9;
     }
   }
 
   &__close {
     margin-top: 32rpx;
     padding: 16rpx 48rpx;
-    background: #F1F5F9;
-    border-radius: 4rpx;
+    background: #D8D8D8;
+    border: 3px solid #222222;
+    border-radius: 0;
+    box-shadow: 4px 4px 0 #222222;
+    transition: box-shadow 150ms, transform 150ms;
+
+    &:active {
+      box-shadow: none;
+      transform: translate(4px, 4px);
+    }
   }
 
   &__close-text {
     font-size: 26rpx;
-    color: #64748B;
+    color: #222222;
   }
 }
 </style>

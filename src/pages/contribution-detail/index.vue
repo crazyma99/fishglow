@@ -1,5 +1,6 @@
 <template>
   <view class="detail" v-if="item">
+    <CustomNav title="CONTRIBUTION" />
     <!-- 状态头部 -->
     <view class="status-banner" :class="'status-banner--' + item.status">
       <text class="status-banner__label">{{ statusLabel(item.status) }}</text>
@@ -90,6 +91,7 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
+import CustomNav from '../../components/CustomNav.vue';
 
 const item = ref(null);
 
@@ -140,74 +142,77 @@ function safeJSON(str, fallback) {
 <style lang="scss" scoped>
 .detail {
   padding: 24rpx;
+  background: #F6F6F6;
+  min-height: 100vh;
 }
 
 .status-banner {
   padding: 20rpx 24rpx;
-  border-radius: 4rpx;
+  border-radius: 0;
   margin-bottom: 24rpx;
   display: flex;
   justify-content: space-between;
   align-items: center;
 
-  &--pending { background: #FEFCE8; border: 1px solid #FDE047; }
-  &--approved { background: #F0FDF4; border: 1px solid #86EFAC; }
-  &--rejected { background: #FEF2F2; border: 1px solid #FECACA; }
+  &--pending { background: rgba(#FFD93D, 0.25); border: 3px solid #222222; box-shadow: 4px 4px 0 #222222; }
+  &--approved { background: rgba(#B4EF4E, 0.25); border: 3px solid #222222; box-shadow: 4px 4px 0 #222222; }
+  &--rejected { background: rgba(#FF590E, 0.15); border: 3px solid #222222; box-shadow: 4px 4px 0 #222222; }
 
-  &__label { font-size: 28rpx; font-weight: bold; }
-  &--pending &__label { color: #CA8A04; }
-  &--approved &__label { color: #16A34A; }
-  &--rejected &__label { color: #DC2626; }
+  &__label { font-family: 'SpaceGrotesk', -apple-system, 'PingFang SC', sans-serif; font-weight: 900; font-size: 28rpx; }
+  &--pending &__label { color: #222222; }
+  &--approved &__label { color: #222222; }
+  &--rejected &__label { color: #FF590E; }
 
-  &__time { font-size: 22rpx; color: #64748B; }
+  &__time { font-size: 22rpx; color: #A9A9A9; }
 }
 
 .note-card {
-  background: #FFF7ED;
-  border-color: #FDBA74;
+  background: rgba(#FFD93D, 0.2);
+  border-color: #222222;
   margin-bottom: 24rpx;
 
-  &__label { font-size: 22rpx; color: #9A3412; margin-bottom: 4rpx; display: block; }
-  &__text { font-size: 26rpx; color: #9A3412; line-height: 1.5; }
+  &__label { font-size: 22rpx; color: #222222; margin-bottom: 4rpx; display: block; }
+  &__text { font-size: 26rpx; color: #222222; line-height: 1.5; }
 }
 
 .card {
-  background: #FFFFFF;
-  border: 1px solid #E2E8F0;
-  border-radius: 4rpx;
+  background: #EEEEEE;
+  border: 3px solid #222222;
+  border-radius: 0;
+  box-shadow: 4px 4px 0 #222222;
   padding: 24rpx;
   margin-bottom: 24rpx;
 
-  &--muted { background: #F8FAFC; }
-  &__title { font-size: 28rpx; font-weight: bold; color: #1E293B; margin-bottom: 16rpx; display: block; }
+  &--muted { background: #D8D8D8; }
+  &__title { font-family: 'SpaceGrotesk', -apple-system, 'PingFang SC', sans-serif; font-weight: 900; font-size: 28rpx; color: #222222; margin-bottom: 16rpx; display: block; }
 }
 
 .info-row {
   display: flex;
   justify-content: space-between;
   padding: 10rpx 0;
-  border-bottom: 1px solid #F1F5F9;
+  border-bottom: 3px solid #D8D8D8;
 
   &:last-child { border-bottom: none; }
-  &__label { font-size: 24rpx; color: #64748B; }
-  &__value { font-size: 24rpx; color: #1E293B; }
+  &__label { font-size: 24rpx; color: #A9A9A9; }
+  &__value { font-size: 24rpx; color: #222222; }
 }
 
-.detail__text { font-size: 26rpx; color: #1E293B; line-height: 1.6; }
+.detail__text { font-size: 26rpx; color: #222222; line-height: 1.6; }
 
 .bar-chart {
   &__row { display: flex; align-items: center; margin-bottom: 6rpx; }
-  &__month { width: 60rpx; font-size: 20rpx; color: #94A3B8; flex-shrink: 0; }
-  &__track { flex: 1; height: 14rpx; background: #F1F5F9; border-radius: 7rpx; overflow: hidden; }
-  &__fill { height: 100%; border-radius: 7rpx; background: #CBD5E1;
-    &--high { background: #EA580C; }
-    &--mid { background: #F97316; opacity: 0.6; }
+  &__month { width: 60rpx; font-size: 20rpx; color: #A9A9A9; flex-shrink: 0; }
+  &__track { flex: 1; height: 14rpx; background: #D8D8D8; border-radius: 0; overflow: hidden; }
+  &__fill { height: 100%; border-radius: 0; background: #A9A9A9;
+    &--high { background: #FF590E; }
+    &--mid { background: #FFD93D; }
   }
-  &__val { width: 36rpx; text-align: right; font-size: 20rpx; color: #94A3B8; flex-shrink: 0; }
+  &__val { width: 36rpx; text-align: right; font-family: 'SpaceGrotesk', -apple-system, 'PingFang SC', sans-serif; font-weight: 900; font-size: 20rpx; color: #A9A9A9; flex-shrink: 0; }
 }
 
 .tags { display: flex; flex-wrap: wrap; gap: 10rpx; }
-.tag { font-size: 22rpx; padding: 8rpx 16rpx; border-radius: 4rpx; background: #F1F5F9; color: #64748B;
-  &--primary { background: #FFF7ED; color: #EA580C; }
+.tag { font-size: 22rpx; padding: 8rpx 16rpx; border-radius: 0; border: 2px solid #222222; background: #D8D8D8; color: #222222;
+  &--primary { background: rgba(#FF590E, 0.1); color: #FF590E; border-color: #222222; }
 }
 </style>

@@ -1,5 +1,6 @@
 <template>
   <view class="detail" v-if="fish">
+    <CustomNav title="FISH DETAIL" />
     <!-- 头部信息 -->
     <view class="header-card">
       <view class="header-card__left">
@@ -108,6 +109,7 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
+import CustomNav from '../../components/CustomNav.vue';
 
 import { IMG_BASE as API_BASE } from '../../utils/config';
 
@@ -173,15 +175,18 @@ const tempRangeStyle = computed(() => {
 .detail {
   padding: 24rpx;
   padding-bottom: 48rpx;
+  background: #F6F6F6;
+  min-height: 100vh;
 }
 
 .header-card {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #FFFFFF;
-  border: 1px solid #E2E8F0;
-  border-radius: 4rpx;
+  background: #EEEEEE;
+  border: 3px solid #222222;
+  border-radius: 0;
+  box-shadow: 4px 4px 0 #222222;
   padding: 24rpx;
   margin-bottom: 24rpx;
 
@@ -190,53 +195,57 @@ const tempRangeStyle = computed(() => {
   }
 
   &__name {
+    font-family: 'SpaceGrotesk', -apple-system, 'PingFang SC', sans-serif;
+    font-weight: 900;
     font-size: 36rpx;
-    font-weight: bold;
-    color: #1E293B;
+    color: #222222;
     display: block;
   }
 
   &__latin {
     font-size: 22rpx;
-    color: #94A3B8;
+    color: #A9A9A9;
     font-style: italic;
     margin-top: 4rpx;
   }
 
   &__badge {
     padding: 8rpx 16rpx;
-    border-radius: 4rpx;
+    border: 2px solid #222222;
+    border-radius: 0;
 
-    &--easy { background: #F0FDF4; }
-    &--medium { background: #FEFCE8; }
-    &--hard { background: #FEF2F2; }
+    &--easy { background: rgba(#B4EF4E, 0.3); }
+    &--medium { background: rgba(#FFD93D, 0.3); }
+    &--hard { background: rgba(#FF590E, 0.2); }
   }
 
   &__badge-text {
     font-size: 22rpx;
     font-weight: bold;
-    color: #1E293B;
+    color: #222222;
   }
 }
 
 .card {
-  background: #FFFFFF;
-  border: 1px solid #E2E8F0;
-  border-radius: 4rpx;
+  background: #EEEEEE;
+  border: 3px solid #222222;
+  border-radius: 0;
+  box-shadow: 4px 4px 0 #222222;
   padding: 24rpx;
   margin-bottom: 24rpx;
 
   &__title {
+    font-family: 'SpaceGrotesk', -apple-system, 'PingFang SC', sans-serif;
+    font-weight: 900;
     font-size: 28rpx;
-    font-weight: bold;
-    color: #1E293B;
+    color: #222222;
     margin-bottom: 20rpx;
     display: block;
   }
 
   &__desc {
     font-size: 22rpx;
-    color: #64748B;
+    color: #A9A9A9;
     margin-top: 16rpx;
     line-height: 1.5;
   }
@@ -253,11 +262,11 @@ const tempRangeStyle = computed(() => {
   &__month {
     width: 60rpx;
     font-size: 20rpx;
-    color: #94A3B8;
+    color: #A9A9A9;
     flex-shrink: 0;
 
     &--current {
-      color: #EA580C;
+      color: #FF590E;
       font-weight: bold;
     }
   }
@@ -265,32 +274,33 @@ const tempRangeStyle = computed(() => {
   &__track {
     flex: 1;
     height: 16rpx;
-    background: #F1F5F9;
-    border-radius: 8rpx;
+    background: #D8D8D8;
+    border-radius: 0;
     overflow: hidden;
   }
 
   &__fill {
     height: 100%;
-    border-radius: 8rpx;
-    background: #CBD5E1;
+    border-radius: 0;
+    background: #A9A9A9;
     transition: width 300ms;
 
-    &--high { background: #EA580C; }
-    &--mid { background: #F97316; opacity: 0.6; }
-    &--current { background: #EA580C; }
+    &--high { background: #FF590E; }
+    &--mid { background: #FFD93D; }
+    &--current { background: #FF590E; }
   }
 
   &__val {
     width: 40rpx;
     text-align: right;
+    font-family: 'SpaceGrotesk', -apple-system, 'PingFang SC', sans-serif;
+    font-weight: 900;
     font-size: 20rpx;
-    color: #94A3B8;
+    color: #A9A9A9;
     flex-shrink: 0;
 
     &--current {
-      color: #EA580C;
-      font-weight: bold;
+      color: #FF590E;
     }
   }
 
@@ -310,24 +320,25 @@ const tempRangeStyle = computed(() => {
   &__legend-dot {
     width: 16rpx;
     height: 16rpx;
-    border-radius: 4rpx;
+    border-radius: 0;
 
-    &--high { background: #EA580C; }
-    &--mid { background: #F97316; opacity: 0.6; }
-    &--low { background: #CBD5E1; }
+    &--high { background: #FF590E; }
+    &--mid { background: #FFD93D; }
+    &--low { background: #A9A9A9; }
   }
 
   &__legend-text {
     font-size: 20rpx;
-    color: #64748B;
+    color: #A9A9A9;
   }
 }
 
 /* 中国地图 */
 .map-wrap {
   margin-bottom: 16rpx;
-  background: #FAFBFC;
-  border-radius: 4rpx;
+  background: #D8D8D8;
+  border: 3px solid #222222;
+  border-radius: 0;
   padding: 16rpx;
 
   &__img {
@@ -340,12 +351,13 @@ const tempRangeStyle = computed(() => {
 
   &__text {
     font-size: 24rpx;
-    color: #64748B;
+    color: #A9A9A9;
   }
 
   &__num {
-    color: #EA580C;
-    font-weight: bold;
+    font-family: 'SpaceGrotesk', -apple-system, 'PingFang SC', sans-serif;
+    font-weight: 900;
+    color: #FF590E;
     font-size: 28rpx;
   }
 }
@@ -359,10 +371,11 @@ const tempRangeStyle = computed(() => {
 
 .province-tag {
   font-size: 20rpx;
-  color: #EA580C;
-  background: #FFF7ED;
+  color: #222222;
+  background: rgba(#B4EF4E, 0.3);
+  border: 2px solid #222222;
   padding: 6rpx 12rpx;
-  border-radius: 4rpx;
+  border-radius: 0;
 }
 
 /* 饵料列表 */
@@ -376,20 +389,21 @@ const tempRangeStyle = computed(() => {
   display: flex;
   align-items: center;
   gap: 8rpx;
-  background: #F0F9FF;
+  background: rgba(#00CFFF, 0.15);
+  border: 2px solid #222222;
   padding: 10rpx 20rpx;
-  border-radius: 4rpx;
+  border-radius: 0;
 
   &__dot {
     width: 12rpx;
     height: 12rpx;
     border-radius: 50%;
-    background: #0EA5E9;
+    background: #00CFFF;
   }
 
   &__name {
     font-size: 24rpx;
-    color: #1E293B;
+    color: #222222;
   }
 }
 
@@ -397,8 +411,9 @@ const tempRangeStyle = computed(() => {
 .temp-visual {
   &__bar {
     height: 16rpx;
-    background: linear-gradient(to right, #BFDBFE, #60A5FA, #F97316, #DC2626);
-    border-radius: 8rpx;
+    background: linear-gradient(to right, #00CFFF, #B4EF4E, #FFD93D, #FF590E);
+    border-radius: 0;
+    border: 2px solid #222222;
     position: relative;
     margin-bottom: 8rpx;
   }
@@ -407,8 +422,8 @@ const tempRangeStyle = computed(() => {
     position: absolute;
     top: -4rpx;
     height: 24rpx;
-    border: 3rpx solid #1E293B;
-    border-radius: 12rpx;
+    border: 3rpx solid #222222;
+    border-radius: 0;
     background: rgba(255,255,255,0.3);
   }
 
@@ -420,13 +435,14 @@ const tempRangeStyle = computed(() => {
 
   &__label {
     font-size: 18rpx;
-    color: #94A3B8;
+    color: #A9A9A9;
   }
 
   &__value {
+    font-family: 'SpaceGrotesk', -apple-system, 'PingFang SC', sans-serif;
+    font-weight: 900;
     font-size: 26rpx;
-    color: #EA580C;
-    font-weight: bold;
+    color: #FF590E;
   }
 }
 
@@ -438,14 +454,14 @@ const tempRangeStyle = computed(() => {
 }
 
 .method-item {
-  background: #FFF7ED;
-  border: 1px solid #FDBA74;
-  border-radius: 4rpx;
+  background: rgba(#FF590E, 0.1);
+  border: 2px solid #222222;
+  border-radius: 0;
   padding: 10rpx 24rpx;
 
   &__text {
     font-size: 24rpx;
-    color: #EA580C;
+    color: #FF590E;
     font-weight: bold;
   }
 }
@@ -463,18 +479,18 @@ const tempRangeStyle = computed(() => {
 
   &__text {
     font-size: 28rpx;
-    color: #1E293B;
+    color: #222222;
   }
 }
 
 /* 技巧卡片 */
 .tip-card {
-  background: #F0F9FF;
-  border-color: #BAE6FD;
+  background: rgba(#00CFFF, 0.1);
+  border-color: #222222;
 
   &__text {
     font-size: 26rpx;
-    color: #0C4A6E;
+    color: #222222;
     line-height: 1.6;
   }
 }

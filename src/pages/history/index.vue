@@ -1,5 +1,6 @@
 <template>
   <view class="history">
+    <CustomNav title="SCAN HISTORY" />
     <LoginGuide v-if="!loggedIn" title="登录查看历史" desc="登录后可查看识别记录" @loggedIn="onLoggedIn" />
 
     <template v-else>
@@ -25,6 +26,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
+import CustomNav from '../../components/CustomNav.vue';
 import { request } from '../../utils/api';
 import { getOpenid, isLoggedIn } from '../../utils/auth';
 import { setTemp } from '../../utils/storage';
@@ -97,35 +99,41 @@ function goResult(item) {
 <style lang="scss" scoped>
 .history {
   padding: 24rpx;
+  background: #F6F6F6;
+  min-height: 100vh;
 
   &__item {
     display: flex;
     gap: 16rpx;
     padding: 20rpx;
-    background: #FFFFFF;
-    border: 1px solid #E2E8F0;
-    border-radius: 4rpx;
+    background: #EEEEEE;
+    border: 3px solid #222222;
+    border-radius: 0;
     margin-bottom: 16rpx;
-    transition: opacity 150ms;
+    box-shadow: 4px 4px 0 #222222;
+    transition: box-shadow 150ms, transform 150ms;
 
     &--active {
-      opacity: 0.7;
+      box-shadow: none;
+      transform: translate(4px, 4px);
     }
   }
 
   &__img {
     width: 100rpx;
     height: 100rpx;
-    border-radius: 4rpx;
+    border-radius: 0;
     flex-shrink: 0;
+    border: 3px solid #222222;
   }
 
   &__img-placeholder {
     width: 100rpx;
     height: 100rpx;
-    border-radius: 4rpx;
-    background: #F1F5F9;
+    border-radius: 0;
+    background: #D8D8D8;
     flex-shrink: 0;
+    border: 3px solid #222222;
   }
 
   &__info {
@@ -137,13 +145,14 @@ function goResult(item) {
 
   &__name {
     font-size: 28rpx;
-    font-weight: bold;
-    color: #1E293B;
+    font-weight: 900;
+    color: #222222;
+    font-family: 'SpaceGrotesk', -apple-system, 'PingFang SC', sans-serif;
   }
 
   &__date {
     font-size: 24rpx;
-    color: #64748B;
+    color: #A9A9A9;
     margin-top: 4rpx;
   }
 }
@@ -153,7 +162,7 @@ function goResult(item) {
   padding: 120rpx 0;
 
   &__text {
-    color: #94A3B8;
+    color: #A9A9A9;
     font-size: 28rpx;
   }
 }
@@ -163,8 +172,10 @@ function goResult(item) {
   padding: 24rpx;
 
   &__text {
-    color: #0EA5E9;
+    color: #00CFFF;
     font-size: 26rpx;
+    font-family: 'SpaceGrotesk', -apple-system, 'PingFang SC', sans-serif;
+    font-weight: 900;
   }
 }
 </style>

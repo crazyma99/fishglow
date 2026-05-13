@@ -71,12 +71,16 @@
         <button class="btn btn--secondary" @click="showEdit=false">取消</button>
       </template>
     </Drawer>
+
+    <!-- 图片裁剪器 -->
+    <ImageCropper :visible="showCropper" :src="cropperSrc" :ratio="16/9" :outputWidth="640" @crop="onCropDone" @cancel="showCropper=false" />
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue';
 import Drawer from '../components/Drawer.vue';
+import ImageCropper from '../components/ImageCropper.vue';
 import { apiFetch, imgUrl, ADMIN_KEY, API_BASE } from '../utils/api';
 
 const list = ref([]);
@@ -160,34 +164,31 @@ async function handleDelete(f) {
   } catch(e) { alert(e.message); }
 }
 
-async function handleCoverUpload(e) {
+// 封面裁剪
+const showCropper = ref(false);
+const cropperSrc = ref('');
+
+function handleCoverUpload(e) {
   const file = e.target.files[0];
   if (!file || !current.value) return;
+  cropperSrc.value = URL.createObjectURL(file);
+  showCropper.value = true;
+}
 
-  // 客户端裁剪 3:2
-  const img = new Image();
-  img.onload = async () => {
-    const canvas = document.createElement('canvas');
-    canvas.width = 600; canvas.height = 400;
-    const ctx = canvas.getContext('2d');
-    const ratio = 3/2, srcRatio = img.width/img.height;
-    let sx=0,sy=0,sw=img.width,sh=img.height;
-    if (srcRatio > ratio) { sw = img.height*ratio; sx=(img.width-sw)/2; }
-    else { sh = img.width/ratio; sy=(img.height-sh)/2; }
-    ctx.drawImage(img, sx, sy, sw, sh, 0, 0, 600, 400);
+async function onCropDone(blob) {
+  showCropper.value = false;
+  if (!blob || !current.value) return;
 
-    canvas.toBlob(async (blob) => {
-      const fd = new FormData();
-      fd.append('image', blob, 'cover.jpg');
-      fd.append('admin_key', ADMIN_KEY);
-      fd.append('fish_id', current.value.id);
-      const res = await fetch(API_BASE + '/api/fish/upload-cover', { method:'POST', body:fd });
-      const data = await res.json();
-      if (data.code === 0) { loadList(); showDetail.value = false; }
-      else alert(data.msg);
-    }, 'image/jpeg', 0.85);
-  };
-  img.src = URL.createObjectURL(file);
+  const fd = new FormData();
+  fd.append('image', blob, 'cover.jpg');
+  fd.append('admin_key', ADMIN_KEY);
+  fd.append('fish_id', current.value.id);
+  try {
+    const res = await fetch(API_BASE + '/api/fish/upload-cover', { method: 'POST', body: fd });
+    const data = await res.json();
+    if (data.code === 0) { loadList(); showDetail.value = false; }
+    else alert(data.msg);
+  } catch(e) { alert(e.message); }
 }
 </script>
 

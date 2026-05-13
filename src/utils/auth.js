@@ -1,4 +1,4 @@
-import { request } from './api';
+import { request, clearCache } from './api';
 
 const OPENID_KEY = 'fishglow_openid';
 
@@ -72,4 +72,5 @@ export async function ensureLogin() {
  */
 export function logout() {
   uni.removeStorageSync(OPENID_KEY);
+  clearCache();
 }

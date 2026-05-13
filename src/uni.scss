@@ -1,12 +1,41 @@
-/* Design System Variables */
-$primary: #EA580C;
-$primary-light: #FFF7ED;
-$secondary: #0EA5E9;
-$secondary-light: #F0F9FF;
-$bg: #FAFBFC;
-$card-bg: #FFFFFF;
-$border: #E2E8F0;
-$text-primary: #1E293B;
-$text-secondary: #64748B;
-$radius: 4rpx;
-$shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+/* ===== FishGlow Y2K Streetwear × Pixel Design System ===== */
+
+// 品牌色
+$brand-orange: #FF590E;
+$brand-green: #B4EF4E;
+$brand-black: #222222;
+
+// 中性色
+$n50: #F6F6F6;
+$n100: #EEEEEE;
+$n200: #D8D8D8;
+$n400: #A9A9A9;
+$n900: #222222;
+
+// 功能色
+$color-success: #B4EF4E;
+$color-error: #FF590E;
+$color-warning: #FFD93D;
+$color-info: #00CFFF;
+
+// 边框 & 阴影 (Neo-Brutalism core)
+$border-w: 3px;
+$border-c: #222222;
+$shadow: 4px 4px 0 #222222;
+$shadow-sm: 2px 2px 0 #222222;
+
+// 圆角
+$radius: 0;
+$radius-pill: 999rpx;  // 胶囊按钮
+
+// 间距
+$sp-xs: 8rpx;
+$sp-sm: 16rpx;
+$sp-md: 24rpx;
+$sp-lg: 32rpx;
+$sp-xl: 48rpx;
+
+// 字体
+$font-display: 'SpaceGrotesk', -apple-system, 'PingFang SC', sans-serif;
+$font-body: -apple-system, 'PingFang SC', sans-serif;
+$font-size-base: 28rpx;

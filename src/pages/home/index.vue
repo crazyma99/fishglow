@@ -1,45 +1,42 @@
 <template>
   <view class="home">
-    <!-- Logo -->
-    <view class="home__logo">
-      <image class="home__logo-img" src="/static/logo.png" mode="aspectFit" />
-    </view>
+    <CustomNav home />
 
     <!-- 每日一鱼 -->
-    <view class="card" hover-class="card--active" hover-stay-time="150" @tap="goFishDetail(dailyFish)">
-      <view class="card__header">
-        <text class="card__title">每日一鱼</text>
+    <view class="card" hover-class="card--press" @tap="goFishDetail(dailyFish)">
+      <view class="card__head">
+        <text class="card__tag card__tag--green">★ TODAY'S CATCH</text>
         <text class="card__sub">{{ todayDate }}</text>
       </view>
-      <view class="daily-fish" v-if="dailyFish">
-        <image v-if="dailyFish.image_url" :src="dailyFish.image_url" class="daily-fish__img" mode="aspectFill" />
-        <view class="daily-fish__info">
-          <text class="daily-fish__name">{{ dailyFish.name_zh }}</text>
-          <text class="daily-fish__desc">{{ dailyFish.description || '点击查看详情' }}</text>
+      <view class="daily" v-if="dailyFish">
+        <view class="daily__info">
+          <text class="daily__name">{{ dailyFish.name_zh }}</text>
+          <text class="daily__latin">{{ dailyFish.name_latin || '' }}</text>
+          <text class="daily__tip">{{ dailyFish.tip || '点击查看详情 →' }}</text>
         </view>
       </view>
     </view>
 
     <!-- 本周挑战 -->
     <view class="card">
-      <view class="card__header">
-        <text class="card__title">本周挑战</text>
+      <view class="card__head">
+        <text class="card__tag card__tag--orange">WEEKLY QUEST</text>
       </view>
-      <text class="challenge__text">识别5种不同的鱼</text>
-      <view class="challenge__bar">
-        <view class="challenge__progress" :style="{ width: Math.min(collectionCount / 5 * 100, 100) + '%' }"></view>
+      <text class="quest__label">识别 5 种不同的鱼</text>
+      <view class="quest__bar">
+        <view class="quest__fill" :style="{ width: Math.min(collectionCount / 5 * 100, 100) + '%' }"></view>
       </view>
-      <text class="challenge__count">{{ collectionCount }}/5</text>
+      <text class="quest__count">{{ collectionCount }} / 5</text>
     </view>
 
     <!-- 当季活跃 -->
     <view class="card">
-      <view class="card__header">
-        <text class="card__title">当季活跃</text>
+      <view class="card__head">
+        <text class="card__tag card__tag--green">HOT THIS SEASON 🔥</text>
       </view>
-      <scroll-view scroll-x class="seasonal-scroll">
-        <view class="seasonal-list">
-          <view v-for="fish in seasonalList" :key="fish.name_zh" class="seasonal-item" @tap="goFishDetail(fish)">
+      <scroll-view scroll-x class="season-scroll">
+        <view class="season-list">
+          <view v-for="fish in seasonalList" :key="fish.name_zh" class="season-item" @tap="goFishDetail(fish)">
             <FishCard :fish="fish" />
           </view>
         </view>
@@ -48,21 +45,21 @@
 
     <!-- 快捷入口 -->
     <view class="shortcuts">
-      <view class="shortcut-item" hover-class="shortcut-item--active" @tap="goHistory">
-        <image class="shortcut-item__icon" src="/static/icons/primary/history.svg" mode="aspectFit" />
-        <text class="shortcut-item__text">识别历史</text>
+      <view class="shortcut" hover-class="shortcut--press" @tap="goHistory">
+        <image class="shortcut__icon" src="/static/icons/primary/history.svg" mode="aspectFit" />
+        <text class="shortcut__text">SCAN HISTORY</text>
       </view>
-      <view class="shortcut-item" hover-class="shortcut-item--active" @tap="goAchievement">
-        <image class="shortcut-item__icon" src="/static/icons/primary/trophy.svg" mode="aspectFit" />
-        <text class="shortcut-item__text">我的成就</text>
+      <view class="shortcut" hover-class="shortcut--press" @tap="goAchievement">
+        <image class="shortcut__icon" src="/static/icons/primary/trophy.svg" mode="aspectFit" />
+        <text class="shortcut__text">MY BADGES ★</text>
       </view>
-      <view class="shortcut-item" hover-class="shortcut-item--active" @tap="goFishDb">
-        <image class="shortcut-item__icon" src="/static/icons/primary/fish.svg" mode="aspectFit" />
-        <text class="shortcut-item__text">鱼类百科</text>
+      <view class="shortcut" hover-class="shortcut--press" @tap="goFishDb">
+        <image class="shortcut__icon" src="/static/icons/primary/fish.svg" mode="aspectFit" />
+        <text class="shortcut__text">FISH WIKI</text>
       </view>
-      <view class="shortcut-item" hover-class="shortcut-item--active" @tap="goFishing">
-        <image class="shortcut-item__icon" src="/static/icons/primary/star.svg" mode="aspectFit" />
-        <text class="shortcut-item__text">去钓鱼</text>
+      <view class="shortcut" hover-class="shortcut--press" @tap="goFishing">
+        <image class="shortcut__icon" src="/static/icons/primary/star.svg" mode="aspectFit" />
+        <text class="shortcut__text">GO FISHING</text>
       </view>
     </view>
   </view>
@@ -74,6 +71,7 @@ import { onShow, onPullDownRefresh } from '@dcloudio/uni-app';
 import { request } from '../../utils/api';
 import { isLoggedIn, getOpenid } from '../../utils/auth';
 import FishCard from '../../components/FishCard.vue';
+import CustomNav from '../../components/CustomNav.vue';
 
 const dailyFish = ref(null);
 const seasonalList = ref([]);
@@ -86,17 +84,11 @@ onMounted(() => {
   loadSeasonal();
 });
 
-onShow(() => {
-  loadCollectionCount();
-});
+onShow(() => { loadCollectionCount(); });
 
 onPullDownRefresh(async () => {
-  try {
-    await loadSeasonal();
-    loadCollectionCount();
-  } finally {
-    uni.stopPullDownRefresh();
-  }
+  try { await loadSeasonal(); loadCollectionCount(); }
+  finally { uni.stopPullDownRefresh(); }
 });
 
 async function loadSeasonal() {
@@ -109,22 +101,15 @@ async function loadSeasonal() {
       const dayIndex = (today.getFullYear() * 366 + today.getMonth() * 31 + today.getDate()) % Math.min(list.length, 5);
       dailyFish.value = list[dayIndex];
     }
-  } catch (e) {
-    console.log('load seasonal error', e);
-  }
+  } catch (e) { console.log('load seasonal error', e); }
 }
 
 async function loadCollectionCount() {
-  if (!isLoggedIn()) {
-    collectionCount.value = 0;
-    return;
-  }
+  if (!isLoggedIn()) { collectionCount.value = 0; return; }
   try {
     const res = await request({ url: '/user/stats', data: { openid: getOpenid() } });
     collectionCount.value = res.data.collection_count || 0;
-  } catch (e) {
-    collectionCount.value = 0;
-  }
+  } catch (e) { collectionCount.value = 0; }
 }
 
 function goFishDetail(fish) {
@@ -132,180 +117,169 @@ function goFishDetail(fish) {
   uni.setStorageSync('temp_fish_detail', JSON.stringify(fish));
   uni.navigateTo({ url: '/pages/fish-detail/index' });
 }
-
-function goHistory() {
-  uni.navigateTo({ url: '/pages/history/index' });
-}
-
-function goAchievement() {
-  uni.navigateTo({ url: '/pages/achievement/index' });
-}
-
-function goFishDb() {
-  uni.switchTab({ url: '/pages/fishdb/index' });
-}
-
-function goFishing() {
-  uni.showToast({ title: '功能开发中', icon: 'none' });
-}
+function goHistory() { uni.navigateTo({ url: '/pages/history/index' }); }
+function goAchievement() { uni.navigateTo({ url: '/pages/achievement/index' }); }
+function goFishDb() { uni.switchTab({ url: '/pages/fishdb/index' }); }
+function goFishing() { uni.showToast({ title: 'COMING SOON...', icon: 'none' }); }
 </script>
 
 <style lang="scss" scoped>
 .home {
   padding: 24rpx;
-
-  &__logo {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 24rpx;
-  }
-
-  &__logo-img {
-    width: 240rpx;
-    height: 144rpx;
-  }
+  background: #F6F6F6;
+  min-height: 100vh;
 }
 
+/* === Y2K Card === */
 .card {
-  background: #FFFFFF;
-  border: 1px solid #E2E8F0;
-  border-radius: 4rpx;
+  background: #EEEEEE;
+  border: 3px solid #222222;
+  border-radius: 0;
+  box-shadow: 4px 4px 0 #222222;
   padding: 24rpx;
-  margin-bottom: 24rpx;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
-  transition: opacity 150ms;
+  margin-bottom: 32rpx;
+  transition: transform 100ms, box-shadow 100ms;
 
-  &--active {
-    opacity: 0.7;
+  &--press {
+    box-shadow: none;
+    transform: translate(4px, 4px);
   }
 
-  &__header {
+  &__head {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 16rpx;
   }
 
-  &__title {
-    font-size: 30rpx;
-    font-weight: bold;
-    color: #1E293B;
+  &__tag {
+    font-family: 'SpaceGrotesk', -apple-system, 'PingFang SC', sans-serif;
+    font-weight: 900;
+    font-size: 24rpx;
+    padding: 6rpx 20rpx;
+    border: 2px solid #222222;
+    border-radius: 0;
+
+    &--green { background: #B4EF4E; color: #222222; }
+    &--orange { background: #FF590E; color: #FFFFFF; }
   }
 
   &__sub {
-    font-size: 24rpx;
-    color: #64748B;
+    font-size: 22rpx;
+    color: #A9A9A9;
+    font-weight: 700;
   }
 }
 
-.daily-fish {
-  display: flex;
-  gap: 16rpx;
-
-  &__img {
-    width: 160rpx;
-    height: 120rpx;
-    border-radius: 4rpx;
-  }
-
-  &__info {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
+/* Daily fish */
+.daily {
+  &__info { display: flex; flex-direction: column; gap: 6rpx; }
 
   &__name {
-    font-size: 32rpx;
-    font-weight: bold;
-    color: #1E293B;
+    font-family: 'SpaceGrotesk', -apple-system, 'PingFang SC', sans-serif;
+    font-size: 40rpx;
+    font-weight: 900;
+    color: #222222;
   }
 
-  &__desc {
+  &__latin {
+    font-size: 22rpx;
+    color: #A9A9A9;
+    font-style: italic;
+  }
+
+  &__tip {
     font-size: 24rpx;
-    color: #64748B;
+    color: #222222;
     margin-top: 8rpx;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
+    line-height: 1.5;
   }
 }
 
-.challenge {
-  &__text {
+/* Quest */
+.quest {
+  &__label {
     font-size: 26rpx;
-    color: #1E293B;
+    color: #222222;
+    font-weight: 700;
+    display: block;
   }
 
   &__bar {
-    height: 12rpx;
-    background: #E2E8F0;
-    border-radius: 4rpx;
+    height: 20rpx;
+    background: #D8D8D8;
+    border: 2px solid #222222;
     margin-top: 16rpx;
-    overflow: hidden;
   }
 
-  &__progress {
+  &__fill {
     height: 100%;
-    background: #EA580C;
-    border-radius: 4rpx;
+    background: #B4EF4E;
     transition: width 300ms;
   }
 
   &__count {
-    font-size: 22rpx;
-    color: #64748B;
+    font-family: 'SpaceGrotesk', -apple-system, 'PingFang SC', sans-serif;
+    font-size: 28rpx;
+    font-weight: 900;
+    color: #222222;
     margin-top: 8rpx;
+    display: block;
+    text-align: right;
   }
 }
 
-.seasonal-scroll {
+/* Season scroll */
+.season-scroll {
   white-space: nowrap;
   margin: 0 -24rpx;
   padding: 0 24rpx;
 }
 
-.seasonal-list {
+.season-list {
   display: inline-flex;
   gap: 16rpx;
 }
 
-.seasonal-item {
+.season-item {
   width: 240rpx;
   flex-shrink: 0;
   display: inline-block;
 }
 
+/* Shortcuts */
 .shortcuts {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 16rpx;
 }
 
-.shortcut-item {
-  background: #FFFFFF;
-  border: 1px solid #E2E8F0;
-  border-radius: 4rpx;
-  padding: 32rpx 24rpx;
+.shortcut {
+  background: #EEEEEE;
+  border: 3px solid #222222;
+  box-shadow: 4px 4px 0 #222222;
+  padding: 28rpx 20rpx;
   display: flex;
   align-items: center;
-  gap: 16rpx;
-  transition: opacity 150ms;
+  gap: 12rpx;
+  transition: transform 100ms, box-shadow 100ms;
 
-  &--active {
-    opacity: 0.7;
+  &--press {
+    box-shadow: none;
+    transform: translate(4px, 4px);
   }
 
   &__icon {
-    width: 44rpx;
-    height: 44rpx;
+    width: 40rpx;
+    height: 40rpx;
   }
 
   &__text {
-    font-size: 26rpx;
-    color: #1E293B;
+    font-family: 'SpaceGrotesk', -apple-system, 'PingFang SC', sans-serif;
+    font-size: 22rpx;
+    font-weight: 900;
+    color: #222222;
+    letter-spacing: 1rpx;
   }
 }
 </style>

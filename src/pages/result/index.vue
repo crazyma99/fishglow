@@ -1,5 +1,6 @@
 <template>
   <view class="result">
+    <CustomNav title="SCAN RESULT" />
     <!-- Hero 区: 大图 + 渐变遮罩 + 鱼名 -->
     <view class="hero">
       <image :src="fishCoverImage || imagePath" class="hero__img" mode="aspectFill" />
@@ -209,6 +210,7 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
+import CustomNav from '../../components/CustomNav.vue';
 import { getTemp, removeTemp } from '../../utils/storage';
 import { request } from '../../utils/api';
 import { ensureLogin } from '../../utils/auth';
@@ -270,7 +272,7 @@ const ringStyle = computed(() => {
   const pct = parseFloat(topResult.value.score) * 100;
   const deg = (pct / 100) * 360;
   return {
-    background: `conic-gradient(#EA580C ${deg}deg, #E2E8F0 ${deg}deg)`
+    background: `conic-gradient(#FF590E ${deg}deg, #D8D8D8 ${deg}deg)`
   };
 });
 
@@ -421,7 +423,8 @@ async function submitContribution() {
 <style lang="scss" scoped>
 .result {
   padding-bottom: 160rpx;
-  background: #FAFBFC;
+  background: #F6F6F6;
+  min-height: 100vh;
 }
 
 /* Hero 区域 */
@@ -429,6 +432,7 @@ async function submitContribution() {
   position: relative;
   height: 480rpx;
   overflow: hidden;
+  border-bottom: 3px solid #222222;
 
   &__img {
     width: 100%;
@@ -451,8 +455,9 @@ async function submitContribution() {
   }
 
   &__name {
+    font-family: 'SpaceGrotesk', -apple-system, 'PingFang SC', sans-serif;
+    font-weight: 900;
     font-size: 44rpx;
-    font-weight: bold;
     color: #FFFFFF;
     display: block;
     margin-bottom: 12rpx;
@@ -461,7 +466,8 @@ async function submitContribution() {
   &__badge {
     display: inline-block;
     padding: 8rpx 20rpx;
-    border-radius: 4rpx;
+    border-radius: 0;
+    border: 2px solid #222222;
   }
 
   &__badge-text {
@@ -495,8 +501,9 @@ async function submitContribution() {
   }
 
   &__value {
+    font-family: 'SpaceGrotesk', -apple-system, 'PingFang SC', sans-serif;
+    font-weight: 900;
     font-size: 28rpx;
-    font-weight: bold;
     color: #FFFFFF;
     position: relative;
   }
@@ -514,9 +521,10 @@ async function submitContribution() {
 }
 
 .section-title {
+  font-family: 'SpaceGrotesk', -apple-system, 'PingFang SC', sans-serif;
+  font-weight: 900;
   font-size: 30rpx;
-  font-weight: bold;
-  color: #1E293B;
+  color: #222222;
   margin-bottom: 20rpx;
   display: block;
 }
@@ -533,9 +541,10 @@ async function submitContribution() {
   display: flex;
   align-items: flex-start;
   gap: 12rpx;
-  background: #FFFFFF;
-  border: 1px solid #E2E8F0;
-  border-radius: 4rpx;
+  background: #EEEEEE;
+  border: 3px solid #222222;
+  border-radius: 0;
+  box-shadow: 4px 4px 0 #222222;
   padding: 20rpx;
 
   &__icon {
@@ -552,13 +561,13 @@ async function submitContribution() {
 
   &__label {
     font-size: 20rpx;
-    color: #94A3B8;
+    color: #A9A9A9;
     display: block;
   }
 
   &__value {
     font-size: 26rpx;
-    color: #1E293B;
+    color: #222222;
     margin-top: 4rpx;
     line-height: 1.3;
   }
@@ -566,22 +575,23 @@ async function submitContribution() {
 
 /* 特征卡 */
 .feature-card {
-  background: #FFFFFF;
-  border: 1px solid #E2E8F0;
-  border-radius: 4rpx;
+  background: #EEEEEE;
+  border: 3px solid #222222;
+  border-radius: 0;
+  box-shadow: 4px 4px 0 #222222;
   padding: 20rpx;
   margin-bottom: 20rpx;
 
   &__title {
     font-size: 22rpx;
-    color: #94A3B8;
+    color: #A9A9A9;
     display: block;
     margin-bottom: 8rpx;
   }
 
   &__text {
     font-size: 26rpx;
-    color: #1E293B;
+    color: #222222;
     line-height: 1.5;
   }
 }
@@ -595,19 +605,20 @@ async function submitContribution() {
 }
 
 .tag-item {
-  background: #F1F5F9;
-  border-radius: 4rpx;
+  background: #D8D8D8;
+  border: 2px solid #222222;
+  border-radius: 0;
   padding: 12rpx 20rpx;
 
   &__label {
     font-size: 20rpx;
-    color: #94A3B8;
+    color: #A9A9A9;
     display: block;
   }
 
   &__value {
     font-size: 24rpx;
-    color: #1E293B;
+    color: #222222;
     margin-top: 2rpx;
   }
 }
@@ -617,9 +628,10 @@ async function submitContribution() {
   display: flex;
   align-items: flex-start;
   gap: 12rpx;
-  background: #FFF7ED;
-  border: 1px solid #FDBA74;
-  border-radius: 4rpx;
+  background: rgba(#FFD93D, 0.2);
+  border: 3px solid #222222;
+  border-radius: 0;
+  box-shadow: 4px 4px 0 #222222;
   padding: 20rpx;
   margin-bottom: 24rpx;
 
@@ -632,7 +644,7 @@ async function submitContribution() {
 
   &__text {
     font-size: 26rpx;
-    color: #9A3412;
+    color: #222222;
     line-height: 1.4;
   }
 }
@@ -650,7 +662,8 @@ async function submitContribution() {
 .related-img {
   width: 240rpx;
   height: 160rpx;
-  border-radius: 4rpx;
+  border-radius: 0;
+  border: 3px solid #222222;
   flex-shrink: 0;
   display: inline-block;
 }
@@ -658,11 +671,12 @@ async function submitContribution() {
 /* 百科描述 */
 .desc-text {
   font-size: 26rpx;
-  color: #475569;
+  color: #222222;
   line-height: 1.6;
-  background: #FFFFFF;
-  border: 1px solid #E2E8F0;
-  border-radius: 4rpx;
+  background: #EEEEEE;
+  border: 3px solid #222222;
+  border-radius: 0;
+  box-shadow: 4px 4px 0 #222222;
   padding: 20rpx;
 }
 
@@ -682,15 +696,17 @@ async function submitContribution() {
 .candidate-card {
   width: 200rpx;
   flex-shrink: 0;
-  background: #FFFFFF;
-  border: 1px solid #E2E8F0;
-  border-radius: 4rpx;
+  background: #EEEEEE;
+  border: 3px solid #222222;
+  border-radius: 0;
+  box-shadow: 4px 4px 0 #222222;
   overflow: hidden;
   display: inline-block;
-  transition: opacity 150ms;
+  transition: box-shadow 150ms, transform 150ms;
 
   &--active {
-    opacity: 0.7;
+    box-shadow: none;
+    transform: translate(4px, 4px);
   }
 
   &__img {
@@ -701,14 +717,14 @@ async function submitContribution() {
       display: flex;
       align-items: center;
       justify-content: center;
-      background: #F0F9FF;
+      background: #D8D8D8;
     }
   }
 
   &__name {
     font-size: 24rpx;
     font-weight: bold;
-    color: #1E293B;
+    color: #222222;
     padding: 12rpx 12rpx 4rpx;
     display: block;
     overflow: hidden;
@@ -717,9 +733,12 @@ async function submitContribution() {
   }
 
   &__score {
+    font-family: 'SpaceGrotesk', -apple-system, 'PingFang SC', sans-serif;
+    font-weight: 900;
     font-size: 20rpx;
     padding: 4rpx 8rpx;
-    border-radius: 4rpx;
+    border-radius: 0;
+    border: 2px solid #222222;
     margin: 0 12rpx 12rpx;
     display: inline-block;
   }
@@ -728,16 +747,16 @@ async function submitContribution() {
 /* 置信度颜色 */
 .confidence {
   &--high {
-    color: #16A34A;
-    background: #F0FDF4;
+    color: #222222;
+    background: rgba(#B4EF4E, 0.3);
   }
   &--mid {
-    color: #CA8A04;
-    background: #FEFCE8;
+    color: #222222;
+    background: rgba(#FFD93D, 0.3);
   }
   &--low {
-    color: #64748B;
-    background: #F1F5F9;
+    color: #A9A9A9;
+    background: #D8D8D8;
   }
 }
 
@@ -751,8 +770,8 @@ async function submitContribution() {
   gap: 16rpx;
   padding: 20rpx 24rpx;
   padding-bottom: calc(20rpx + env(safe-area-inset-bottom));
-  background: #FFFFFF;
-  border-top: 1px solid #E2E8F0;
+  background: #F6F6F6;
+  border-top: 3px solid #222222;
 
   &__btn {
     flex: 1;
@@ -761,20 +780,22 @@ async function submitContribution() {
     align-items: center;
     justify-content: center;
     gap: 8rpx;
-    border-radius: 4rpx;
-    transition: opacity 150ms;
+    border-radius: 999rpx;
+    border: 3px solid #222222;
+    box-shadow: 4px 4px 0 #222222;
+    transition: box-shadow 150ms, transform 150ms;
 
     &--primary {
-      background: #EA580C;
+      background: #FF590E;
     }
 
     &--secondary {
-      background: #FFFFFF;
-      border: 1px solid #E2E8F0;
+      background: #EEEEEE;
     }
 
     &--hover {
-      opacity: 0.8;
+      box-shadow: none;
+      transform: translate(4px, 4px);
     }
   }
 
@@ -789,7 +810,7 @@ async function submitContribution() {
     font-weight: bold;
 
     &--dark {
-      color: #1E293B;
+      color: #222222;
     }
   }
 }
@@ -799,13 +820,17 @@ async function submitContribution() {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: linear-gradient(135deg, #FFF7ED, #FEF3C7);
-  border: 1px solid #FDBA74;
-  border-radius: 4rpx;
+  background: rgba(#FFD93D, 0.25);
+  border: 3px solid #222222;
+  border-radius: 0;
+  box-shadow: 4px 4px 0 #222222;
   padding: 24rpx;
-  transition: opacity 150ms;
+  transition: box-shadow 150ms, transform 150ms;
 
-  &--active { opacity: 0.7; }
+  &--active {
+    box-shadow: none;
+    transform: translate(4px, 4px);
+  }
 
   &__left {
     display: flex;
@@ -821,19 +846,19 @@ async function submitContribution() {
   &__title {
     font-size: 28rpx;
     font-weight: bold;
-    color: #9A3412;
+    color: #222222;
     display: block;
   }
 
   &__desc {
     font-size: 22rpx;
-    color: #B45309;
+    color: #A9A9A9;
     margin-top: 4rpx;
   }
 
   &__arrow {
     font-size: 36rpx;
-    color: #B45309;
+    color: #222222;
   }
 }
 
@@ -841,7 +866,7 @@ async function submitContribution() {
 .form-mask {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0,0,0,0.6);
   z-index: 1000;
   display: flex;
   align-items: flex-end;
@@ -850,8 +875,10 @@ async function submitContribution() {
 .form-panel {
   width: 100%;
   max-height: 80vh;
-  background: #FFFFFF;
-  border-radius: 24rpx 24rpx 0 0;
+  background: #F6F6F6;
+  border: 3px solid #222222;
+  border-radius: 0;
+  box-shadow: 0 -8px 0 #222222;
   display: flex;
   flex-direction: column;
 
@@ -860,18 +887,19 @@ async function submitContribution() {
     justify-content: space-between;
     align-items: center;
     padding: 24rpx 32rpx;
-    border-bottom: 1px solid #E2E8F0;
+    border-bottom: 3px solid #D8D8D8;
   }
 
   &__title {
+    font-family: 'SpaceGrotesk', -apple-system, 'PingFang SC', sans-serif;
+    font-weight: 900;
     font-size: 32rpx;
-    font-weight: bold;
-    color: #1E293B;
+    color: #222222;
   }
 
   &__close {
     font-size: 48rpx;
-    color: #94A3B8;
+    color: #A9A9A9;
     padding: 0 16rpx;
   }
 
@@ -892,7 +920,7 @@ async function submitContribution() {
 
   &__text {
     font-size: 28rpx;
-    color: #64748B;
+    color: #A9A9A9;
   }
 }
 
@@ -901,28 +929,29 @@ async function submitContribution() {
 
   &__label {
     font-size: 24rpx;
-    color: #64748B;
+    color: #A9A9A9;
     margin-bottom: 8rpx;
     display: block;
   }
 
   &__value {
     font-size: 28rpx;
-    color: #1E293B;
+    color: #222222;
     font-weight: bold;
   }
 
   &__input {
-    border: 1px solid #E2E8F0;
-    border-radius: 4rpx;
+    border: 3px solid #222222;
+    border-radius: 0;
     padding: 16rpx;
     font-size: 26rpx;
-    color: #1E293B;
+    color: #222222;
+    background: #EEEEEE;
   }
 
   &__hint {
     font-size: 24rpx;
-    color: #64748B;
+    color: #A9A9A9;
     line-height: 1.5;
   }
 
@@ -934,15 +963,15 @@ async function submitContribution() {
   &__tag {
     padding: 10rpx 24rpx;
     font-size: 24rpx;
-    color: #64748B;
-    background: #F1F5F9;
-    border-radius: 4rpx;
-    border: 1px solid #E2E8F0;
+    color: #A9A9A9;
+    background: #D8D8D8;
+    border-radius: 0;
+    border: 2px solid #222222;
 
     &--active {
-      color: #EA580C;
-      background: #FFF7ED;
-      border-color: #EA580C;
+      color: #222222;
+      background: rgba(#B4EF4E, 0.3);
+      border-color: #222222;
     }
   }
 }
@@ -950,11 +979,16 @@ async function submitContribution() {
 .form-btn {
   text-align: center;
   padding: 24rpx;
-  border-radius: 4rpx;
-  transition: opacity 150ms;
+  border-radius: 999rpx;
+  border: 3px solid #222222;
+  box-shadow: 4px 4px 0 #222222;
+  transition: box-shadow 150ms, transform 150ms;
 
-  &--submit { background: #EA580C; }
-  &--hover { opacity: 0.8; }
+  &--submit { background: #FF590E; }
+  &--hover {
+    box-shadow: none;
+    transform: translate(4px, 4px);
+  }
 
   &__text {
     font-size: 28rpx;
@@ -979,13 +1013,13 @@ async function submitContribution() {
 
   &__text {
     font-size: 32rpx;
-    color: #64748B;
+    color: #A9A9A9;
     font-weight: bold;
   }
 
   &__sub {
     font-size: 24rpx;
-    color: #94A3B8;
+    color: #A9A9A9;
     margin-top: 8rpx;
   }
 }

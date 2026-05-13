@@ -124,35 +124,42 @@ async function handleImage(filePath) {
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: opacity 150ms;
+    transition: box-shadow 150ms, transform 150ms;
 
     &--album {
-      background: rgba(255, 255, 255, 0.2);
-      border-radius: 4rpx;
+      background: rgba(255, 255, 255, 0.15);
+      border: 3px solid #FFFFFF;
+      border-radius: 0;
+      box-shadow: 4px 4px 0 rgba(255, 255, 255, 0.3);
     }
 
     &--active {
-      opacity: 0.7;
+      box-shadow: none;
+      transform: translate(4px, 4px);
     }
   }
 
   &__btn-text {
     color: #FFFFFF;
     font-size: 24rpx;
+    font-family: 'SpaceGrotesk', -apple-system, 'PingFang SC', sans-serif;
+    font-weight: 900;
   }
 
   &__shutter {
     width: 128rpx;
     height: 128rpx;
     border-radius: 50%;
-    border: 6rpx solid #FFFFFF;
+    border: 6rpx solid #FF590E;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: opacity 150ms;
+    transition: box-shadow 150ms, transform 150ms;
+    box-shadow: 4px 4px 0 rgba(255, 89, 14, 0.5);
 
     &--active {
-      opacity: 0.7;
+      box-shadow: none;
+      transform: translate(4px, 4px);
     }
   }
 
@@ -160,7 +167,7 @@ async function handleImage(filePath) {
     width: 100rpx;
     height: 100rpx;
     border-radius: 50%;
-    background: #FFFFFF;
+    background: #FF590E;
   }
 }
 </style>
