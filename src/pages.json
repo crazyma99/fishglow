@@ -10,7 +10,8 @@
     { "path": "pages/achievement/index", "style": { "navigationStyle": "custom" } },
     { "path": "pages/history/index", "style": { "navigationStyle": "custom" } },
     { "path": "pages/contributions/index", "style": { "navigationStyle": "custom" } },
-    { "path": "pages/contribution-detail/index", "style": { "navigationStyle": "custom" } }
+    { "path": "pages/contribution-detail/index", "style": { "navigationStyle": "custom" } },
+    { "path": "pages/contribute-form/index", "style": { "navigationStyle": "custom" } }
   ],
   "globalStyle": {
     "navigationBarTextStyle": "black",

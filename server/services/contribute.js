@@ -10,6 +10,7 @@ async function generateFishData(fishName) {
 请搜索网络获取准确信息，然后输出以下JSON格式，不要输出其他内容：
 {
   "name_latin": "拉丁学名",
+  "aliases": "该鱼的所有常见别名/俗名/地方名，用逗号分隔",
   "monthly_activity": [1月到12月的活跃度评分,每月1-10分],
   "fishing_methods": ["适合的钓法数组"],
   "recommended_bait": {
@@ -33,6 +34,7 @@ async function generateFishData(fishName) {
 }
 
 注意：
+- aliases 必须包含该鱼在中国各地的常见叫法，用逗号分隔
 - monthly_activity 必须是12个整数的数组
 - 根据鱼的实际习性填写，冬季不活跃的鱼活跃度应为1-3
 - distribution_provinces 只填中国大陆省份名称

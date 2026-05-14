@@ -374,24 +374,8 @@ async function checkContribute(fishName) {
 async function handleContribute() {
   const openid = await ensureLogin();
   if (!openid) return;
-
-  showContributeForm.value = true;
-  contributeLoading.value = true;
-  contributeData.value = null;
-
-  try {
-    const res = await request({
-      url: '/contribute/generate',
-      method: 'POST',
-      data: { fish_name: topResult.value.name }
-    });
-    contributeData.value = res.data;
-  } catch (e) {
-    uni.showToast({ title: e.message || '生成失败', icon: 'none' });
-    showContributeForm.value = false;
-  } finally {
-    contributeLoading.value = false;
-  }
+  uni.setStorageSync('temp_contribute_fish', topResult.value.name);
+  uni.navigateTo({ url: '/pages/contribute-form/index' });
 }
 
 async function submitContribution() {
@@ -918,6 +902,7 @@ async function submitContribution() {
     flex: 1;
     padding: 24rpx 32rpx;
     height: 60vh;
+    overflow-x: hidden;
   }
 
   &__actions {
@@ -1038,20 +1023,18 @@ async function submitContribution() {
   text-align: center;
   padding: 24rpx;
   border-radius: 999rpx;
-  border: 3px solid #222222;
-  box-shadow: 4px 4px 0 #222222;
-  transition: box-shadow 150ms, transform 150ms;
+  border: 4px solid #222222;
+  background: #FF590E;
+  transition: opacity 150ms;
 
-  &--submit { background: #FF590E; }
   &--hover {
-    box-shadow: none;
-    transform: translate(4px, 4px);
+    opacity: 0.8;
   }
 
   &__text {
     font-size: 28rpx;
     color: #FFFFFF;
-    font-weight: bold;
+    font-weight: 900;
   }
 }
 
