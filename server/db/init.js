@@ -67,6 +67,7 @@ db.exec(`
     habitat TEXT DEFAULT '',
     difficulty TEXT DEFAULT '',
     tip TEXT DEFAULT '',
+    aliases TEXT DEFAULT '',
     distribution_provinces TEXT DEFAULT '',
     cover_image TEXT DEFAULT '',
     source TEXT DEFAULT 'official',
@@ -79,6 +80,7 @@ db.exec(`
     openid TEXT NOT NULL,
     fish_name TEXT NOT NULL,
     name_latin TEXT DEFAULT '',
+    aliases TEXT DEFAULT '',
     monthly_activity TEXT DEFAULT '',
     fishing_methods TEXT DEFAULT '',
     recommended_bait TEXT DEFAULT '',
@@ -103,8 +105,8 @@ if (fishCount === 0) {
   if (fs.existsSync(jsonPath)) {
     const fishData = JSON.parse(fs.readFileSync(jsonPath, 'utf-8'));
     const insert = db.prepare(`
-      INSERT OR IGNORE INTO fish (id, name_zh, name_latin, monthly_activity, fishing_methods, recommended_bait, best_time, water_temp_min, water_temp_max, habitat, difficulty, tip, distribution_provinces, source)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'official')
+      INSERT OR IGNORE INTO fish (id, name_zh, name_latin, aliases, monthly_activity, fishing_methods, recommended_bait, best_time, water_temp_min, water_temp_max, habitat, difficulty, tip, distribution_provinces, source)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'official')
     `);
 
     const insertMany = db.transaction((fishes) => {
@@ -113,6 +115,7 @@ if (fishCount === 0) {
           f.id,
           f.name_zh,
           f.name_latin || '',
+          f.aliases || f.name_zh,
           JSON.stringify(f.monthly_activity),
           JSON.stringify(f.fishing_methods),
           JSON.stringify(f.recommended_bait),

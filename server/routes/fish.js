@@ -55,6 +55,40 @@ router.get('/cover', (req, res) => {
   res.json({ code: 0, data: { cover_image: fish?.cover_image || '' } });
 });
 
+// GET /api/fish/match?name=翘嘴红鲌 — 通过名称或别名匹配鱼种
+router.get('/match', (req, res) => {
+  const { name } = req.query;
+  if (!name) return res.json({ code: 1, msg: 'name required' });
+
+  // 1. 精确匹配主名称
+  let fish = db.prepare('SELECT * FROM fish WHERE name_zh = ?').get(name);
+
+  // 2. 别名模糊匹配
+  if (!fish) {
+    const all = db.prepare('SELECT * FROM fish').all();
+    fish = all.find(f => {
+      const aliases = (f.aliases || '').split(',').map(a => a.trim());
+      return aliases.includes(name);
+    });
+  }
+
+  if (!fish) return res.json({ code: 0, data: { matched: false } });
+
+  res.json({
+    code: 0,
+    data: {
+      matched: true,
+      fish: {
+        ...fish,
+        monthly_activity: JSON.parse(fish.monthly_activity || '[]'),
+        fishing_methods: JSON.parse(fish.fishing_methods || '[]'),
+        distribution_provinces: JSON.parse(fish.distribution_provinces || '[]'),
+        water_temp: { optimal_min: fish.water_temp_min, optimal_max: fish.water_temp_max }
+      }
+    }
+  });
+});
+
 // ===== CRUD (管理后台) =====
 
 // GET /api/fish/list — 获取全部鱼种

@@ -37,7 +37,7 @@ router.post('/generate', perSecond, async (req, res) => {
 router.post('/submit', (req, res) => {
   try {
     const {
-      openid, fish_name, name_latin,
+      openid, fish_name, name_latin, aliases,
       monthly_activity, fishing_methods, recommended_bait, best_time,
       water_temp_min, water_temp_max, habitat, difficulty, tip,
       distribution_provinces
@@ -49,10 +49,10 @@ router.post('/submit', (req, res) => {
     const existing = db.prepare("SELECT id FROM contributions WHERE openid = ? AND fish_name = ? AND status = 'pending'").get(openid, fish_name);
     if (existing) return res.json({ code: 1, msg: '您已提交过该鱼种，请等待审核' });
 
-    db.prepare(`INSERT INTO contributions (openid, fish_name, name_latin, monthly_activity, fishing_methods, recommended_bait, best_time, water_temp_min, water_temp_max, habitat, difficulty, tip, distribution_provinces)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`)
+    db.prepare(`INSERT INTO contributions (openid, fish_name, name_latin, aliases, monthly_activity, fishing_methods, recommended_bait, best_time, water_temp_min, water_temp_max, habitat, difficulty, tip, distribution_provinces)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`)
       .run(
-        openid, fish_name, name_latin || '',
+        openid, fish_name, name_latin || '', aliases || '',
         typeof monthly_activity === 'string' ? monthly_activity : JSON.stringify(monthly_activity),
         typeof fishing_methods === 'string' ? fishing_methods : JSON.stringify(fishing_methods),
         typeof recommended_bait === 'string' ? recommended_bait : JSON.stringify(recommended_bait),

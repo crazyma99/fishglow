@@ -21,6 +21,7 @@ function getAllFish() {
     habitat: row.habitat,
     difficulty: row.difficulty,
     tip: row.tip,
+    aliases: row.aliases || '',
     distribution_provinces: JSON.parse(row.distribution_provinces || '[]'),
     cover_image: row.cover_image || '',
     source: row.source

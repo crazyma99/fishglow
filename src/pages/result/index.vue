@@ -142,13 +142,21 @@
         </view>
 
         <scroll-view scroll-y class="form-panel__body">
+          <!-- Loading 状态 -->
           <view v-if="contributeLoading" class="form-loading">
-            <text class="form-loading__text">AI 正在搜索生成数据...</text>
+            <view class="form-loading__spinner"></view>
+            <text class="form-loading__text">AI 正在搜索并生成数据</text>
+            <text class="form-loading__sub">预计需要 10-30 秒...</text>
           </view>
-          <view v-else-if="contributeData">
+          <!-- 表单内容 -->
+          <view v-else-if="contributeData" class="form-content">
             <view class="form-field">
               <text class="form-field__label">鱼种名称</text>
               <text class="form-field__value">{{ contributeData.fish_name }}</text>
+            </view>
+            <view class="form-field">
+              <text class="form-field__label">别名（逗号分隔）</text>
+              <textarea class="form-field__textarea" v-model="contributeData.aliases" placeholder="如：白鱼,翘壳,翘嘴白" />
             </view>
             <view class="form-field">
               <text class="form-field__label">拉丁学名</text>
@@ -156,7 +164,7 @@
             </view>
             <view class="form-field">
               <text class="form-field__label">栖息环境</text>
-              <input class="form-field__input" v-model="contributeData.habitat" />
+              <textarea class="form-field__textarea" v-model="contributeData.habitat" placeholder="栖息环境描述" />
             </view>
             <view class="form-field">
               <text class="form-field__label">难度</text>
@@ -166,7 +174,7 @@
             </view>
             <view class="form-field">
               <text class="form-field__label">钓鱼技巧</text>
-              <input class="form-field__input" v-model="contributeData.tip" />
+              <textarea class="form-field__textarea" v-model="contributeData.tip" placeholder="50字内的垂钓建议" />
             </view>
             <view class="form-field">
               <text class="form-field__label">分布省份</text>
@@ -399,6 +407,7 @@ async function submitContribution() {
         openid,
         fish_name: contributeData.value.fish_name,
         name_latin: contributeData.value.name_latin,
+        aliases: contributeData.value.aliases || '',
         monthly_activity: contributeData.value.monthly_activity,
         fishing_methods: contributeData.value.fishing_methods,
         recommended_bait: contributeData.value.recommended_bait,
@@ -917,13 +926,43 @@ async function submitContribution() {
 }
 
 .form-loading {
-  padding: 80rpx 0;
+  padding: 120rpx 0;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &__spinner {
+    width: 48rpx;
+    height: 48rpx;
+    border: 4rpx solid #D8D8D8;
+    border-top-color: #FF590E;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin-bottom: 24rpx;
+  }
 
   &__text {
+    font-family: 'SpaceGrotesk', -apple-system, 'PingFang SC', sans-serif;
     font-size: 28rpx;
-    color: #A9A9A9;
+    font-weight: 900;
+    color: #222222;
   }
+
+  &__sub {
+    font-size: 22rpx;
+    color: #A9A9A9;
+    margin-top: 8rpx;
+  }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.form-content {
+  width: 100%;
+  overflow: hidden;
 }
 
 .form-field {
@@ -951,6 +990,20 @@ async function submitContribution() {
     color: #222222;
     background: #EEEEEE;
     box-sizing: border-box;
+    min-height: 64rpx;
+  }
+
+  &__textarea {
+    width: 100%;
+    border: 3px solid #222222;
+    border-radius: 0;
+    padding: 16rpx;
+    font-size: 26rpx;
+    color: #222222;
+    background: #EEEEEE;
+    box-sizing: border-box;
+    min-height: 100rpx;
+    line-height: 1.5;
   }
 
   &__hint {
