@@ -29,23 +29,38 @@
     <!-- Detail Drawer -->
     <Drawer v-model="showDetail" :title="current?.name_zh || ''">
       <template v-if="current">
-        <div class="field"><label>封面图 (3:2)</label>
+        <div class="field"><label>封面图 (16:9)</label>
           <div class="cover-preview">
             <img v-if="current.cover_image" :src="imgUrl(current.cover_image)" />
             <div v-else class="cover-preview__empty">暂无封面</div>
           </div>
           <input type="file" accept="image/*" @change="handleCoverUpload" style="margin-top:8px;font-size:12px" />
         </div>
-        <div class="field"><label>拉丁学名</label><p class="latin">{{ current.name_latin }}</p></div>
+        <div class="field"><label>拉丁学名</label><p class="latin">{{ current.name_latin || '-' }}</p></div>
+        <div class="field"><label>别名</label><p>{{ current.aliases || '-' }}</p></div>
         <div class="field"><label>难度</label><span :class="'tag tag--' + diffColor(current.difficulty)">{{ diffLabel(current.difficulty) }}</span></div>
         <div class="field"><label>月活跃度</label>
           <div class="mini-chart"><div v-for="(v,i) in parse(current.monthly_activity)" :key="i" class="mini-chart__bar" :class="{ high: v>=7, mid: v>=4&&v<7 }" :style="{height: v*10+'%'}"></div></div>
         </div>
         <div class="field"><label>适宜水温</label><p>{{ current.water_temp_min }}°C - {{ current.water_temp_max }}°C</p></div>
-        <div class="field"><label>栖息环境</label><p>{{ current.habitat }}</p></div>
+        <div class="field"><label>栖息环境</label><p>{{ current.habitat || '-' }}</p></div>
         <div class="field"><label>钓法</label><span v-for="m in parse(current.fishing_methods)" :key="m" class="tag tag--primary">{{ m }}</span></div>
+        <div class="field"><label>推荐饵料</label>
+          <div v-for="s in ['spring','summer','autumn','winter']" :key="s" style="margin-bottom:4px">
+            <span style="font-size:11px;color:var(--text-secondary)">{{ {spring:'春',summer:'夏',autumn:'秋',winter:'冬'}[s] }}:</span>
+            <span v-for="b in (parse(current.recommended_bait)||{})[s]||[]" :key="b" class="tag">{{ b }}</span>
+            <span v-if="!((parse(current.recommended_bait)||{})[s]||[]).length" style="font-size:12px;color:var(--text-secondary)">-</span>
+          </div>
+        </div>
+        <div class="field"><label>最佳时间</label>
+          <div v-for="s in ['spring','summer','autumn','winter']" :key="s" style="font-size:12px;margin-bottom:2px">
+            <span style="color:var(--text-secondary)">{{ {spring:'春',summer:'夏',autumn:'秋',winter:'冬'}[s] }}:</span>
+            {{ (parse(current.best_time)||{})[s] || '-' }}
+          </div>
+        </div>
         <div class="field"><label>分布省份 ({{ (parse(current.distribution_provinces)||[]).length }}个)</label><span v-for="p in parse(current.distribution_provinces)" :key="p" class="tag">{{ p }}</span></div>
-        <div class="field"><label>钓鱼技巧</label><p>{{ current.tip }}</p></div>
+        <div class="field"><label>钓鱼技巧</label><p>{{ current.tip || '-' }}</p></div>
+        <div class="field"><label>来源</label><span :class="'tag '+(current.source==='community'?'tag--success':'tag--blue')">{{ current.source==='community'?'社区':'官方' }}</span></div>
       </template>
     </Drawer>
 
@@ -54,15 +69,24 @@
       <div class="form">
         <div class="field"><label>鱼种名称 *</label><input v-model="editData.name_zh" placeholder="如：鲫鱼" /></div>
         <div class="field"><label>拉丁学名</label><input v-model="editData.name_latin" placeholder="Carassius auratus" /></div>
+        <div class="field"><label>别名（逗号分隔）</label><input v-model="editData.aliases_str" placeholder="鲫瓜子,土鲫,银鲫" /></div>
         <div class="field"><label>难度</label>
           <div class="tag-btns"><span v-for="d in ['easy','medium','hard']" :key="d" class="tag-btn" :class="{active:editData.difficulty===d}" @click="editData.difficulty=d">{{ diffLabel(d) }}</span></div>
         </div>
-        <div class="field"><label>栖息环境</label><input v-model="editData.habitat" /></div>
+        <div class="field"><label>栖息环境</label><textarea v-model="editData.habitat" placeholder="如：静水/缓流，水草区"></textarea></div>
         <div class="field"><label>适宜水温 (°C)</label>
           <div class="row"><input type="number" v-model.number="editData.water_temp_min" style="width:80px" /> <span>—</span> <input type="number" v-model.number="editData.water_temp_max" style="width:80px" /></div>
         </div>
-        <div class="field"><label>钓法（逗号分隔）</label><input v-model="editData.fishing_methods_str" /></div>
-        <div class="field"><label>月活跃度（12个数字）</label><input v-model="editData.activity_str" placeholder="5,6,8,10,9,6,4,4,7,9,8,5" /></div>
+        <div class="field"><label>钓法（逗号分隔）</label><input v-model="editData.fishing_methods_str" placeholder="台钓, 路亚, 传统钓" /></div>
+        <div class="field"><label>春季饵料（逗号分隔）</label><input v-model="editData.bait_spring" /></div>
+        <div class="field"><label>夏季饵料（逗号分隔）</label><input v-model="editData.bait_summer" /></div>
+        <div class="field"><label>秋季饵料（逗号分隔）</label><input v-model="editData.bait_autumn" /></div>
+        <div class="field"><label>冬季饵料（逗号分隔）</label><input v-model="editData.bait_winter" /></div>
+        <div class="field"><label>春季最佳时间</label><input v-model="editData.time_spring" /></div>
+        <div class="field"><label>夏季最佳时间</label><input v-model="editData.time_summer" /></div>
+        <div class="field"><label>秋季最佳时间</label><input v-model="editData.time_autumn" /></div>
+        <div class="field"><label>冬季最佳时间</label><input v-model="editData.time_winter" /></div>
+        <div class="field"><label>月活跃度（12个数字，逗号分隔）</label><input v-model="editData.activity_str" placeholder="5,6,8,10,9,6,4,4,7,9,8,5" /></div>
         <div class="field"><label>分布省份（逗号分隔）</label><textarea v-model="editData.provinces_str"></textarea></div>
         <div class="field"><label>钓鱼技巧</label><textarea v-model="editData.tip"></textarea></div>
       </div>
@@ -110,16 +134,19 @@ function openDetail(f) { current.value = f; showDetail.value = true; }
 
 function openCreate() {
   editMode.value = 'create';
-  editData.value = { name_zh:'', name_latin:'', difficulty:'medium', habitat:'', water_temp_min:15, water_temp_max:25, tip:'', fishing_methods_str:'', activity_str:'5,5,5,5,5,5,5,5,5,5,5,5', provinces_str:'' };
+  editData.value = { name_zh:'', name_latin:'', aliases_str:'', difficulty:'medium', habitat:'', water_temp_min:15, water_temp_max:25, tip:'', fishing_methods_str:'', activity_str:'5,5,5,5,5,5,5,5,5,5,5,5', provinces_str:'', bait_spring:'', bait_summer:'', bait_autumn:'', bait_winter:'', time_spring:'', time_summer:'', time_autumn:'', time_winter:'' };
   showEdit.value = true;
 }
 
 function openEdit(f) {
   editMode.value = 'edit';
+  const bait = parse(f.recommended_bait) || {};
+  const time = parse(f.best_time) || {};
   editData.value = {
     id: f.id,
     name_zh: f.name_zh,
     name_latin: f.name_latin || '',
+    aliases_str: f.aliases || '',
     difficulty: f.difficulty || 'medium',
     habitat: f.habitat || '',
     water_temp_min: f.water_temp_min || 0,
@@ -128,6 +155,14 @@ function openEdit(f) {
     fishing_methods_str: (parse(f.fishing_methods)||[]).join(', '),
     activity_str: (parse(f.monthly_activity)||[]).join(', '),
     provinces_str: (parse(f.distribution_provinces)||[]).join(', '),
+    bait_spring: (bait.spring||[]).join(', '),
+    bait_summer: (bait.summer||[]).join(', '),
+    bait_autumn: (bait.autumn||[]).join(', '),
+    bait_winter: (bait.winter||[]).join(', '),
+    time_spring: time.spring || '',
+    time_summer: time.summer || '',
+    time_autumn: time.autumn || '',
+    time_winter: time.winter || '',
   };
   showEdit.value = true;
 }
@@ -138,6 +173,7 @@ async function submitEdit() {
     admin_key: ADMIN_KEY,
     name_zh: d.name_zh,
     name_latin: d.name_latin,
+    aliases: d.aliases_str || '',
     difficulty: d.difficulty,
     habitat: d.habitat,
     water_temp_min: d.water_temp_min,
@@ -146,6 +182,18 @@ async function submitEdit() {
     fishing_methods: d.fishing_methods_str.split(/[,，]/).map(s=>s.trim()).filter(Boolean),
     monthly_activity: d.activity_str.split(/[,，]/).map(s=>parseInt(s.trim())||5),
     distribution_provinces: d.provinces_str.split(/[,，]/).map(s=>s.trim()).filter(Boolean),
+    recommended_bait: {
+      spring: d.bait_spring.split(/[,，]/).map(s=>s.trim()).filter(Boolean),
+      summer: d.bait_summer.split(/[,，]/).map(s=>s.trim()).filter(Boolean),
+      autumn: d.bait_autumn.split(/[,，]/).map(s=>s.trim()).filter(Boolean),
+      winter: d.bait_winter.split(/[,，]/).map(s=>s.trim()).filter(Boolean),
+    },
+    best_time: {
+      spring: d.time_spring,
+      summer: d.time_summer,
+      autumn: d.time_autumn,
+      winter: d.time_winter,
+    },
   };
   if (editMode.value === 'edit') body.id = d.id;
 

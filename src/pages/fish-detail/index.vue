@@ -1,6 +1,12 @@
 <template>
   <view class="detail" v-if="fish">
     <CustomNav title="鱼种详情" />
+
+    <!-- 封面大图 -->
+    <view v-if="coverUrl" class="cover-hero">
+      <image :src="coverUrl" class="cover-hero__img" mode="aspectFill" />
+    </view>
+
     <!-- 头部信息 -->
     <view class="header-card">
       <view class="header-card__left">
@@ -116,12 +122,19 @@ import { IMG_BASE as API_BASE } from '../../utils/config';
 const fish = ref(null);
 const currentMonth = new Date().getMonth();
 
-
 onMounted(() => {
   const raw = uni.getStorageSync('temp_fish_detail');
   if (raw) {
     fish.value = JSON.parse(raw);
   }
+});
+
+// 封面图 URL
+const coverUrl = computed(() => {
+  if (!fish.value || !fish.value.cover_image) return '';
+  const url = fish.value.cover_image;
+  if (url.startsWith('http')) return url;
+  return API_BASE + url;
 });
 
 const currentSeason = computed(() => {
@@ -177,6 +190,17 @@ const tempRangeStyle = computed(() => {
   padding-bottom: 48rpx;
   background: #F6F6F6;
   min-height: 100vh;
+}
+
+.cover-hero {
+  margin: -24rpx -24rpx 24rpx;
+  border-bottom: 3px solid #222222;
+
+  &__img {
+    width: 100%;
+    height: 360rpx;
+    display: block;
+  }
 }
 
 .header-card {

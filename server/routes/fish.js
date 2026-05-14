@@ -112,7 +112,7 @@ router.get('/detail', (req, res) => {
 // POST /api/fish/create — 新增鱼种
 router.post('/create', (req, res) => {
   try {
-    const { admin_key, name_zh, name_latin, monthly_activity, fishing_methods, recommended_bait, best_time, water_temp_min, water_temp_max, habitat, difficulty, tip, distribution_provinces } = req.body;
+    const { admin_key, name_zh, name_latin, aliases, monthly_activity, fishing_methods, recommended_bait, best_time, water_temp_min, water_temp_max, habitat, difficulty, tip, distribution_provinces } = req.body;
     if (admin_key !== process.env.ADMIN_KEY) return res.json({ code: 403, msg: '无权限' });
     if (!name_zh) return res.json({ code: 1, msg: 'name_zh required' });
 
@@ -121,9 +121,9 @@ router.post('/create', (req, res) => {
 
     const id = 'admin_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6);
 
-    db.prepare(`INSERT INTO fish (id, name_zh, name_latin, monthly_activity, fishing_methods, recommended_bait, best_time, water_temp_min, water_temp_max, habitat, difficulty, tip, distribution_provinces, source)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'official')`)
-      .run(id, name_zh, name_latin || '',
+    db.prepare(`INSERT INTO fish (id, name_zh, name_latin, aliases, monthly_activity, fishing_methods, recommended_bait, best_time, water_temp_min, water_temp_max, habitat, difficulty, tip, distribution_provinces, source)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'official')`)
+      .run(id, name_zh, name_latin || '', aliases || '',
         typeof monthly_activity === 'string' ? monthly_activity : JSON.stringify(monthly_activity || []),
         typeof fishing_methods === 'string' ? fishing_methods : JSON.stringify(fishing_methods || []),
         typeof recommended_bait === 'string' ? recommended_bait : JSON.stringify(recommended_bait || {}),
@@ -143,15 +143,15 @@ router.post('/create', (req, res) => {
 // POST /api/fish/update — 更新鱼种
 router.post('/update', (req, res) => {
   try {
-    const { admin_key, id, name_zh, name_latin, monthly_activity, fishing_methods, recommended_bait, best_time, water_temp_min, water_temp_max, habitat, difficulty, tip, distribution_provinces } = req.body;
+    const { admin_key, id, name_zh, name_latin, aliases, monthly_activity, fishing_methods, recommended_bait, best_time, water_temp_min, water_temp_max, habitat, difficulty, tip, distribution_provinces } = req.body;
     if (admin_key !== process.env.ADMIN_KEY) return res.json({ code: 403, msg: '无权限' });
     if (!id) return res.json({ code: 1, msg: 'id required' });
 
     const fish = db.prepare('SELECT id FROM fish WHERE id = ?').get(id);
     if (!fish) return res.json({ code: 1, msg: '鱼种不存在' });
 
-    db.prepare(`UPDATE fish SET name_zh=?, name_latin=?, monthly_activity=?, fishing_methods=?, recommended_bait=?, best_time=?, water_temp_min=?, water_temp_max=?, habitat=?, difficulty=?, tip=?, distribution_provinces=? WHERE id=?`)
-      .run(name_zh, name_latin || '',
+    db.prepare(`UPDATE fish SET name_zh=?, name_latin=?, aliases=?, monthly_activity=?, fishing_methods=?, recommended_bait=?, best_time=?, water_temp_min=?, water_temp_max=?, habitat=?, difficulty=?, tip=?, distribution_provinces=? WHERE id=?`)
+      .run(name_zh, name_latin || '', aliases || '',
         typeof monthly_activity === 'string' ? monthly_activity : JSON.stringify(monthly_activity || []),
         typeof fishing_methods === 'string' ? fishing_methods : JSON.stringify(fishing_methods || []),
         typeof recommended_bait === 'string' ? recommended_bait : JSON.stringify(recommended_bait || {}),

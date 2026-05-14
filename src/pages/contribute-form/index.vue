@@ -199,15 +199,18 @@ async function submit() {
   &__input {
     width: 100%;
     border: 3px solid #222222;
-    padding: 16rpx 20rpx;
+    padding: 20rpx;
     font-size: 26rpx;
     color: #222222;
     background: #EEEEEE;
     box-sizing: border-box;
+    height: 80rpx;
+    line-height: 40rpx;
   }
 
   &__input--sm {
-    width: 200rpx;
+    width: 160rpx;
+    flex-shrink: 0;
   }
 
   &__textarea {
