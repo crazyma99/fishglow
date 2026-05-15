@@ -6,9 +6,14 @@
       <image :src="fishCoverImage || imagePath" class="hero__img" mode="aspectFill" />
       <view class="hero__overlay"></view>
       <view v-if="topResult" class="hero__content">
-        <text class="hero__name">{{ topResult.name }}</text>
-        <view class="hero__badge" :class="confidenceClass(topResult.score)">
-          <text class="hero__badge-text">{{ confidenceLabel(topResult.score) }}</text>
+        <text class="hero__name">{{ topResult.db_name || topResult.name }}</text>
+        <view class="hero__tags">
+          <view class="hero__badge" :class="confidenceClass(topResult.score)">
+            <text class="hero__badge-text">{{ confidenceLabel(topResult.score) }}</text>
+          </view>
+          <view v-if="topResult.db_matched" class="hero__badge hero__badge--db">
+            <text class="hero__badge-text">已收录</text>
+          </view>
         </view>
       </view>
       <!-- 置信度环 -->
@@ -19,6 +24,11 @@
           <text class="ring__unit">%</text>
         </view>
       </view>
+    </view>
+
+    <!-- 低置信度提示 -->
+    <view v-if="confidenceLevel === 'low'" class="tip-bar tip-bar--warn">
+      <text class="tip-bar__text">识别不太确定，请从下方候选中选择正确的鱼种</text>
     </view>
 
     <!-- 结构化信息 -->
@@ -110,7 +120,8 @@
             <view v-else class="candidate-card__img candidate-card__img--placeholder">
               <image src="/static/icons/muted/fish.svg" style="width:40rpx;height:40rpx" mode="aspectFit" />
             </view>
-            <text class="candidate-card__name">{{ item.name }}</text>
+            <text class="candidate-card__name">{{ item.db_name || item.name }}</text>
+            <text v-if="item.db_matched" class="candidate-card__db">已收录</text>
             <text class="candidate-card__score" :class="confidenceClass(item.score)">
               {{ (parseFloat(item.score) * 100).toFixed(0) }}%
             </text>
@@ -234,6 +245,7 @@ const showContributeForm = ref(false);
 const contributeLoading = ref(false);
 const contributeData = ref(null);
 const fishCoverImage = ref('');
+const confidenceLevel = ref('medium');
 import { IMG_BASE } from '../../utils/config';
 
 onMounted(() => {
@@ -247,6 +259,7 @@ onMounted(() => {
 
   imagePath.value = data.imagePath || '';
   photoUrl.value = data.photoUrl || '';
+  confidenceLevel.value = data.confidenceLevel || 'medium';
   const results = (data.results || []).filter(
     r => r.name !== '非动物' && parseFloat(r.score) > 0.01
   );
@@ -255,8 +268,15 @@ onMounted(() => {
   if (results.length > 0) {
     topResult.value = results[0];
     candidates.value = results.slice(1);
+
+    // 如果 Top1 已匹配数据库且有封面图，直接用
+    if (results[0].db_matched && results[0].db_cover) {
+      const cover = results[0].db_cover;
+      fishCoverImage.value = cover.startsWith('http') ? cover : IMG_BASE + cover;
+    }
+
     // 检查鱼种是否已有完整数据
-    checkContribute(results[0].name);
+    checkContribute(results[0].db_name || results[0].name);
   }
   loading.value = false;
 });
@@ -326,7 +346,7 @@ async function addToCollection() {
       method: 'POST',
       data: {
         openid,
-        fish_name: topResult.value.name,
+        fish_name: topResult.value.db_name || topResult.value.name,
         image_url: photoUrl.value || topResult.value.baike_info?.image_url || '',
         baike_url: topResult.value.baike_info?.baike_url || '',
         description: topResult.value.baike_info?.description || '',
@@ -456,11 +476,21 @@ async function submitContribution() {
     margin-bottom: 12rpx;
   }
 
+  &__tags {
+    display: flex;
+    gap: 8rpx;
+    flex-wrap: wrap;
+  }
+
   &__badge {
     display: inline-block;
     padding: 8rpx 20rpx;
     border-radius: 0;
     border: 2px solid #222222;
+
+    &--db {
+      background: #B4EF4E;
+    }
   }
 
   &__badge-text {
@@ -658,6 +688,35 @@ async function submitContribution() {
   border-radius: 0;
   border: 3px solid #222222;
   flex-shrink: 0;
+  display: inline-block;
+}
+
+/* 低置信度提示 */
+.tip-bar {
+  margin: 0 24rpx 16rpx;
+  padding: 16rpx 20rpx;
+  border: 3px solid #222222;
+
+  &--warn {
+    background: #FFD93D;
+  }
+
+  &__text {
+    font-size: 24rpx;
+    font-weight: 700;
+    color: #222222;
+  }
+}
+
+/* 候选匹配标记 */
+.candidate-card__db {
+  font-size: 16rpx;
+  font-weight: 900;
+  color: #222222;
+  background: #B4EF4E;
+  padding: 2rpx 8rpx;
+  border: 1px solid #222222;
+  margin: 0 12rpx 8rpx;
   display: inline-block;
 }
 

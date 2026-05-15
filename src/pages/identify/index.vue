@@ -56,10 +56,14 @@ async function handleImage(filePath) {
     const res = await uploadFile(filePath);
     const results = res.data.result || [];
     const photoUrl = res.data.photo_url || '';
+    const confidenceLevel = res.data.confidence_level || 'medium';
+    const hasDbMatch = res.data.has_db_match || false;
     const resultData = {
       imagePath: filePath,
       photoUrl,
       results,
+      confidenceLevel,
+      hasDbMatch,
       timestamp: Date.now()
     };
     setTemp('temp_result', resultData);
