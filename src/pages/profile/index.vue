@@ -25,6 +25,31 @@
           <text class="user-card__name-edit">✎</text>
         </view>
         <text class="user-card__id">渔光用户</text>
+        <!-- 手机号绑定状态 -->
+        <view class="user-card__phone" v-if="phoneBound">
+          <text class="user-card__phone-text">{{ phoneDisplay }}</text>
+        </view>
+        <view v-else class="user-card__bind" hover-class="user-card__bind--press" @tap="showBindPhone">
+          <text class="user-card__bind-text">绑定手机号</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 绑定手机号弹窗 -->
+    <view v-if="showPhoneModal" class="phone-modal" @tap="showPhoneModal = false">
+      <view class="phone-modal__panel" @tap.stop>
+        <text class="phone-modal__title">绑定手机号</text>
+        <text class="phone-modal__desc">绑定后可在 APP 端同步数据</text>
+        <input class="phone-modal__input" v-model="phoneInput" type="number" maxlength="11" placeholder="输入手机号" />
+        <view class="phone-modal__code-row">
+          <input class="phone-modal__input phone-modal__input--code" v-model="codeInput" type="number" maxlength="6" placeholder="验证码" />
+          <view class="phone-modal__send" :class="{ 'phone-modal__send--disabled': countdown > 0 }" hover-class="phone-modal__send--press" @tap="sendCode">
+            <text class="phone-modal__send-text">{{ countdown > 0 ? countdown + 's' : '获取验证码' }}</text>
+          </view>
+        </view>
+        <view class="phone-modal__submit" hover-class="phone-modal__submit--press" @tap="bindPhone">
+          <text class="phone-modal__submit-text">确认绑定</text>
+        </view>
       </view>
     </view>
 
@@ -90,6 +115,15 @@ const collectionCount = ref(0);
 const identifyCount = ref(0);
 const recentBadges = ref([]);
 
+// 手机号绑定
+const phoneBound = ref(false);
+const phoneDisplay = ref('');
+const showPhoneModal = ref(false);
+const phoneInput = ref('');
+const codeInput = ref('');
+const countdown = ref(0);
+let countdownTimer = null;
+
 onShow(() => {
   checkLoginState();
 });
@@ -98,6 +132,7 @@ function checkLoginState() {
   loggedIn.value = isLoggedIn();
   if (loggedIn.value) {
     loadProfile();
+    loadPhoneStatus();
   }
 }
 
@@ -130,6 +165,62 @@ async function handleLogin() {
   if (openid) {
     loggedIn.value = true;
     loadProfile();
+  }
+}
+
+// 手机号相关
+async function loadPhoneStatus() {
+  try {
+    const res = await request({ url: '/phone/status', data: { openid: getOpenid() } });
+    phoneBound.value = res.data.bound;
+    phoneDisplay.value = res.data.phone;
+  } catch (e) {}
+}
+
+function showBindPhone() {
+  phoneInput.value = '';
+  codeInput.value = '';
+  showPhoneModal.value = true;
+}
+
+async function sendCode() {
+  if (countdown.value > 0) return;
+  if (!phoneInput.value || !/^1\d{10}$/.test(phoneInput.value)) {
+    uni.showToast({ title: '请输入正确的手机号', icon: 'none' });
+    return;
+  }
+  try {
+    const res = await request({ url: '/phone/send-code', method: 'POST', data: { phone: phoneInput.value } });
+    uni.showToast({ title: '验证码已发送', icon: 'success' });
+    // 开发模式自动填入
+    if (res.data?.debug_code) codeInput.value = res.data.debug_code;
+    // 倒计时
+    countdown.value = 60;
+    countdownTimer = setInterval(() => {
+      countdown.value--;
+      if (countdown.value <= 0) clearInterval(countdownTimer);
+    }, 1000);
+  } catch (e) {
+    uni.showToast({ title: e.message || '发送失败', icon: 'none' });
+  }
+}
+
+async function bindPhone() {
+  if (!phoneInput.value || !codeInput.value) {
+    uni.showToast({ title: '请填写手机号和验证码', icon: 'none' });
+    return;
+  }
+  try {
+    await request({
+      url: '/phone/bind',
+      method: 'POST',
+      data: { openid: getOpenid(), phone: phoneInput.value, code: codeInput.value }
+    });
+    uni.showToast({ title: '绑定成功', icon: 'success' });
+    showPhoneModal.value = false;
+    loadPhoneStatus();
+  } catch (e) {
+    uni.showToast({ title: e.message || '绑定失败', icon: 'none' });
   }
 }
 
@@ -460,6 +551,119 @@ function handleLogout() {
     font-size: 32rpx;
     font-weight: 900;
     color: #222222;
+  }
+}
+
+/* 手机号 */
+.user-card__phone {
+  margin-top: 6rpx;
+}
+.user-card__phone-text {
+  font-size: 22rpx;
+  color: #A9A9A9;
+}
+.user-card__bind {
+  margin-top: 6rpx;
+  display: inline-block;
+  padding: 4rpx 16rpx;
+  background: #B4EF4E;
+  border: 2px solid #222222;
+}
+.user-card__bind--press { opacity: 0.7; }
+.user-card__bind-text {
+  font-size: 20rpx;
+  font-weight: 700;
+  color: #222222;
+}
+
+/* 绑定弹窗 */
+.phone-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48rpx;
+
+  &__panel {
+    width: 100%;
+    background: #F6F6F6;
+    border: 3px solid #222222;
+    box-shadow: 8px 8px 0 #222222;
+    padding: 32rpx;
+  }
+
+  &__title {
+    font-family: 'SpaceGrotesk', -apple-system, 'PingFang SC', sans-serif;
+    font-size: 32rpx;
+    font-weight: 900;
+    color: #222222;
+    display: block;
+    margin-bottom: 8rpx;
+  }
+
+  &__desc {
+    font-size: 22rpx;
+    color: #A9A9A9;
+    display: block;
+    margin-bottom: 24rpx;
+  }
+
+  &__input {
+    width: 100%;
+    border: 3px solid #222222;
+    padding: 20rpx;
+    font-size: 28rpx;
+    color: #222222;
+    background: #EEEEEE;
+    box-sizing: border-box;
+    height: 88rpx;
+    margin-bottom: 16rpx;
+  }
+
+  &__input--code {
+    flex: 1;
+    margin-bottom: 0;
+  }
+
+  &__code-row {
+    display: flex;
+    gap: 12rpx;
+    margin-bottom: 24rpx;
+  }
+
+  &__send {
+    background: #EEEEEE;
+    border: 3px solid #222222;
+    padding: 0 20rpx;
+    display: flex;
+    align-items: center;
+    height: 88rpx;
+    flex-shrink: 0;
+  }
+  &__send--press { opacity: 0.7; }
+  &__send--disabled { opacity: 0.5; }
+  &__send-text {
+    font-size: 24rpx;
+    font-weight: 700;
+    color: #222222;
+    white-space: nowrap;
+  }
+
+  &__submit {
+    background: #FF590E;
+    border: 4px solid #222222;
+    border-radius: 999rpx;
+    padding: 24rpx;
+    text-align: center;
+  }
+  &__submit--press { opacity: 0.8; }
+  &__submit-text {
+    font-size: 28rpx;
+    font-weight: 900;
+    color: #FFFFFF;
   }
 }
 </style>

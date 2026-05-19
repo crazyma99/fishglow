@@ -17,5 +17,20 @@
     },
     "usingComponents": true,
     "lazyCodeLoading": "requiredComponents"
+  },
+  "app-plus": {
+    "distribute": {
+      "android": {
+        "packagename": "com.crazyma.fishglow",
+        "minSdkVersion": 21
+      }
+    },
+    "modules": {
+      "Camera": {}
+    },
+    "splashscreen": {
+      "alwaysShowBeforeRender": true,
+      "autoclose": true
+    }
   }
 }

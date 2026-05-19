@@ -11,10 +11,20 @@ db.pragma('foreign_keys = ON');
 db.exec(`
   CREATE TABLE IF NOT EXISTS users (
     openid TEXT PRIMARY KEY,
+    phone TEXT DEFAULT '',
     nickname TEXT DEFAULT '',
     avatar_url TEXT DEFAULT '',
+    login_type TEXT DEFAULT 'weixin',
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  );
+
+  -- 短信验证码临时表
+  CREATE TABLE IF NOT EXISTS sms_codes (
+    phone TEXT NOT NULL,
+    code TEXT NOT NULL,
+    expires_at INTEGER NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
   );
 
   CREATE TABLE IF NOT EXISTS collections (

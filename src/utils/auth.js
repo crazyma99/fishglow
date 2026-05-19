@@ -17,13 +17,33 @@ export function getOpenid() {
 }
 
 /**
- * 登录（仅在需要时调用）
- * 返回 openid，失败抛异常
+ * 登录
+ * 小程序: wx.login → openid
+ * APP: 跳转手机号登录页
  */
 export function login() {
   const cached = uni.getStorageSync(OPENID_KEY);
   if (cached) return Promise.resolve(cached);
 
+  // #ifdef APP-PLUS
+  // APP 端跳转手机号登录页
+  return new Promise((resolve, reject) => {
+    uni.navigateTo({
+      url: '/pages/phone-login/index',
+      events: {
+        loginSuccess(data) {
+          const openid = data.openid;
+          uni.setStorageSync(OPENID_KEY, openid);
+          resolve(openid);
+        }
+      },
+      fail: reject
+    });
+  });
+  // #endif
+
+  // #ifndef APP-PLUS
+  // 小程序端用 wx.login
   return new Promise((resolve, reject) => {
     uni.login({
       provider: 'weixin',
@@ -49,11 +69,11 @@ export function login() {
       }
     });
   });
+  // #endif
 }
 
 /**
  * 确保已登录，未登录则触发登录流程
- * 成功返回 openid，失败提示用户
  */
 export async function ensureLogin() {
   if (isLoggedIn()) return getOpenid();

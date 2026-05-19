@@ -30,6 +30,7 @@ app.use('/api/badges', require('./routes/badges'));
 app.use('/api/map', require('./routes/map'));
 app.use('/api/contribute', require('./routes/contribute'));
 app.use('/api/fish', require('./routes/fish'));
+app.use('/api/phone', require('./routes/phone'));
 
 const PORT = process.env.PORT || 3900;
 const HTTPS_PORT = process.env.HTTPS_PORT || 3901;
